@@ -317,6 +317,15 @@ button:focus-visible {
 .feature-tags span::before, .connect-links:not(.connect-links--compact) a::before { position: absolute; z-index: -1; inset: 0; content: ''; background: var(--accent); transform: scaleY(.02); transform-origin: bottom; transition: transform 220ms var(--ease-out); }
 .feature-copy > small { color: #718479; font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; }
 
+.tech-stack-section { background: #020403; }
+.tech-stack-inner { width: min(100% - 2.5rem, 90rem); margin: 0 auto; padding: 8rem 0 9rem; }
+.tech-stack-inner .kicker { color: #718078; }
+.tech-stack-inner ul { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4.5rem 2rem; margin: 5rem 0 4rem; padding: 0; list-style: none; }
+.tech-stack-inner li { display: flex; min-width: 0; align-items: center; gap: .9rem; color: #8e9791; font-size: 1rem; font-weight: 700; }
+.tech-stack-inner li svg { width: 2.25rem; height: 2.25rem; flex: none; }
+.tech-stack-inner > small { display: block; color: #536159; font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; }
+.tech-stack-inner > small a { color: #849188; text-decoration: underline; text-underline-offset: .2rem; }
+
 .project-scroll { height: 380svh; color: #102018; background: #d8e1d5; }
 .project-sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; }
 .project-track { display: flex; width: max-content; height: 100%; will-change: transform; }
@@ -378,6 +387,21 @@ button:focus-visible {
 .github-activity .kicker { color: #587060; }
 .github-calendar-feature { margin-inline: auto; box-shadow: 0 2rem 6rem rgba(7,17,14,.2); }
 
+.journal-scroll { height: 280svh; background: #020403; }
+.journal-sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.journal-heading { position: absolute; z-index: 2; top: clamp(4rem, 7vh, 6rem); left: 50%; width: min(90%, 52rem); transform: translate3d(-50%, calc(var(--section-progress) * -3rem), 0); opacity: calc(1 - var(--section-progress) * 2.4); text-align: center; }
+.journal-heading h2 { margin: .65rem 0 .25rem; font-size: clamp(2rem, 3vw, 2.8rem); font-weight: 650; letter-spacing: -.05em; line-height: .95; white-space: nowrap; }
+.journal-heading > p:last-child { margin: 0 auto; color: #87978e; font-size: .86rem; }
+.journal-grid { position: absolute; inset: 0; }
+.journal-card { --journal-x: 0vw; --journal-y: 0vh; position: absolute; overflow: hidden; margin: 0; border: 1px solid rgba(238,244,233,.18); border-radius: .8rem; background: #0d1712; box-shadow: 0 1.5rem 5rem rgba(0,0,0,.35); transform: translate3d(calc(var(--section-progress) * var(--journal-x)), calc(var(--section-progress) * var(--journal-y)), 0) scale(calc(1 + var(--section-progress) * .24)); will-change: transform; }
+.journal-card img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.journal-card--1 { --journal-x: -24vw; --journal-y: -8vh; left: 4%; top: 29%; width: 27%; height: 49%; }
+.journal-card--2 { --journal-x: 5vw; --journal-y: -19vh; left: 32%; top: max(9rem, 22%); width: 45%; height: 27%; }
+.journal-card--3 { left: 32%; top: 50%; z-index: 1; width: 34%; height: 28%; }
+.journal-card--4 { --journal-x: 25vw; --journal-y: -2vh; right: 2%; top: 50%; width: 31%; height: 28%; }
+.journal-card--5 { --journal-x: -6vw; --journal-y: 22vh; left: 4%; top: 79%; width: 45%; height: 20%; }
+.journal-card figcaption { position: absolute; top: 50%; left: 50%; display: inline-flex; align-items: center; gap: .45rem; transform: translate(-50%, -50%); border-radius: 999px; color: #101812; background: #eef4e9; padding: .7rem 1rem; font-size: .62rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+
 .contact-scroll { height: 180svh; }
 .contact-sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; background: #07110e; }
 .closing-kinetic { position: absolute; inset: 12% -2rem auto auto; display: grid; opacity: .17; font-size: clamp(6rem, 16vw, 15rem); font-weight: 850; letter-spacing: -.09em; line-height: .63; text-align: right; }
@@ -418,9 +442,11 @@ button:focus-visible {
   .hero-portrait { top: 10%; right: 4%; width: min(46vw, 28rem); }
   .now-heading { left: 3rem; }
   .role-list li { right: 3rem; grid-template-columns: 1.5rem minmax(14rem, 23rem); }
+  .tech-stack-inner ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
+  .tech-stack-inner ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .capability-feature { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; padding-inline: 1.5rem; }
   .feature-copy h3 { font-size: clamp(2.75rem, 5vw, 3.6rem); }
   .capability-feature:last-child .feature-copy h3 { font-size: clamp(2.35rem, 4.3vw, 3.1rem); }
@@ -454,6 +480,11 @@ button:focus-visible {
   .feature-visual, .capability-feature:nth-child(even) .feature-visual { width: min(88vw, 25rem); margin: 0 auto; transform: rotate(-2deg); }
   .feature-copy h3 { font-size: clamp(2.7rem, 12vw, 5.2rem); }
   .capability-feature:last-child .feature-copy h3 { font-size: clamp(2.25rem, 10.5vw, 4.5rem); }
+  .tech-stack-inner ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem 1.5rem; margin-block: 4rem 3rem; }
+  .tech-stack-inner { padding-block: 6rem; }
+  .tech-stack-inner ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.25rem 1rem; margin-block: 3.5rem; }
+  .tech-stack-inner li { gap: .7rem; font-size: .86rem; }
+  .tech-stack-inner li svg { width: 1.85rem; height: 1.85rem; }
   .credibility-list li { grid-template-columns: 2rem 1fr; gap: .75rem; }
   .credibility-list p { grid-column: 2; }
   .hackathons-inner { padding-block: 6rem; }
@@ -477,6 +508,12 @@ button:focus-visible {
   .footer-connect { align-items: start; }
   .github-activity-inner { min-height: auto; padding-block: 6rem; }
   .github-activity-copy { margin-bottom: 3rem; }
+  .journal-scroll { height: auto; }
+  .journal-sticky { position: relative; height: auto; overflow: visible; padding: 6rem 1.25rem; }
+  .journal-heading { position: relative; inset: auto; width: 100%; margin-bottom: 3rem; transform: none; opacity: 1; }
+  .journal-heading h2 { white-space: normal; }
+  .journal-grid { position: relative; display: grid; gap: 1rem; }
+  .journal-card, .journal-card--1, .journal-card--2, .journal-card--3, .journal-card--4, .journal-card--5 { position: relative; inset: auto; width: 100%; height: auto; aspect-ratio: 4 / 3; transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -497,6 +534,11 @@ button:focus-visible {
   .project-sticky { position: relative; height: auto; overflow: visible; }
   .project-track { display: grid; width: auto; transform: none !important; }
   .project-lead, .project-card, .project-outro { width: 100%; min-height: 70svh; }
+  .journal-scroll { height: auto; }
+  .journal-sticky { position: relative; height: auto; overflow: visible; padding: 8rem max(3rem, calc((100vw - 1312px) / 2)); }
+  .journal-heading { position: relative; inset: auto; width: 100%; margin-bottom: 3rem; transform: none; opacity: 1; }
+  .journal-grid { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  .journal-card, .journal-card--1, .journal-card--2, .journal-card--3, .journal-card--4, .journal-card--5 { position: relative; inset: auto; width: 100%; height: auto; aspect-ratio: 4 / 3; transform: none; }
   .reveal-in { opacity: 1; transform: none; }
 }
 

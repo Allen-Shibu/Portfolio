@@ -4,6 +4,24 @@ import Github from '@thesvg/react/github'
 import Gmail2026 from '@thesvg/react/gmail-2026'
 import Linkedin from '@thesvg/react/linkedin'
 import XFormerlyTwitter from '@thesvg/react/x-formerly-twitter'
+import Aws from '@thesvg/react/aws'
+import Blender from '@thesvg/react/blender'
+import Css3 from '@thesvg/react/css3'
+import Git from '@thesvg/react/git'
+import GoIcon from '@thesvg/react/go'
+import GoogleColab from '@thesvg/react/google-colab'
+import Html5 from '@thesvg/react/html5'
+import Javascript from '@thesvg/react/javascript'
+import Linux from '@thesvg/react/linux'
+import Postgresql from '@thesvg/react/postgresql'
+import Postman from '@thesvg/react/postman'
+import Python from '@thesvg/react/python'
+import Render from '@thesvg/react/render'
+import Supabase from '@thesvg/react/supabase'
+import ReactLogo from '@thesvg/react/react'
+import Typescript from '@thesvg/react/typescript'
+import VisualStudioCode from '@thesvg/react/visual-studio-code'
+import Vercel from '@thesvg/react/vercel'
 import KineticGrid from '@/components/ui/kinetic-grid'
 import GithubCalendar from '@/components/ui/retro-space-shooter-git-hub-calendar'
 
@@ -13,9 +31,30 @@ const contactLinks = [
   ['X', 'https://x.com/AllenShibu'],
   ['Gmail', 'mailto:allenshibukuriakose@gmail.com'],
 ] as const
+const techStack = [
+  ['Go', <GoIcon />],
+  ['Python', <Python />],
+  ['JavaScript', <Javascript />],
+  ['TypeScript', <Typescript />],
+  ['HTML', <Html5 />],
+  ['CSS', <Css3 />],
+  ['React', <ReactLogo />],
+  ['PostgreSQL', <Postgresql />],
+  ['Supabase', <Supabase />],
+  ['AWS', <Aws variant="icon" />],
+  ['Vercel', <Vercel variant="light" />],
+  ['Render', <Render />],
+  ['Linux', <Linux />],
+  ['Git', <Git />],
+  ['GitHub', <Github variant="light" />],
+  ['VS Code', <VisualStudioCode />],
+  ['Google Colab', <GoogleColab />],
+  ['Postman', <Postman />],
+  ['Blender', <Blender />],
+] as const
 const projects = [
   { name: 'Haritha Sethu', kind: 'Civic remote sensing', copy: 'An Axter Labs product turning Earth observation data into local environmental intelligence for Kerala gram panchayats.', stack: 'Earth Engine · PostGIS · Remote sensing · AI', href: 'https://github.com/Allen-Shibu/HarithaSethu', action: 'View repository', image: '/harithasethu.jpeg' },
-  { name: 'OpenOrbit', kind: 'Campus infrastructure', copy: 'Event discovery and registration across campuses, with a no-code form builder and payments. Shipped to 50+ active users.', stack: 'React 19 · Go/Gin · Neon · Razorpay', href: 'https://openorbit.app/', action: 'Open product', image: '/openorbit.jpeg' },
+  { name: 'OpenOrbit', kind: 'Campus infrastructure', copy: 'Event discovery and registration across campuses, with a no-code form builder and payments. Shipped to 100+ active users.', stack: 'React 19 · Go/Gin · Neon · Razorpay', href: 'https://openorbit.app/', action: 'Open product', image: '/openorbit.jpeg' },
   { name: 'ACPIA', kind: 'Investigation agent', copy: 'A CLI assistant for child-protection investigations with isolated evidence, cross-case correlation, and citation-first answers.', stack: 'Python · Gemma 3 Vision · Qwen 2.5', href: 'https://github.com/Allen-Shibu/ACPIA', action: 'View repository' },
   { name: 'CLARA', kind: 'Agentic due diligence', copy: 'Drop a company name. An agentic research loop checks whether the business behind it holds up.', stack: 'Go/Gin · Serper · OpenRouter', href: 'https://cla-ra.vercel.app/', action: 'Open product' },
 ]
@@ -39,8 +78,8 @@ const credibility = [
   ['AWS Student Builders Group Leader', 'Selected to lead Kerala’s third AWS student community.'],
   ['AWS SimuLearn', 'Generative AI Practitioner certification.'],
   ['Solve4Public Lab 1.0', 'Selected and successfully demonstrated Haritha Sethu.'],
-  ['Axter Labs', 'Co-founder; KSUM application submitted for Haritha Sethu.'],
-  ['OpenOrbit', 'Verified 50+ active users.'],
+  ['Axter Labs', 'Co-founder.'],
+  ['OpenOrbit', 'Verified 100+ active users.'],
 ]
 const hackathons = [
   ['CN', 'Codex Nightline', 'July 18, 2026 · Kochi, Kerala', 'World’s first AI hackathon inside a moving Kochi Metro train. Selected as 1 of 100 builders from 1,200+ registrations for a solo overnight build sprint.', '/hackathon/codex-icon.webp', 'https://www.codexnightline.in/#builder-selection'],
@@ -48,6 +87,13 @@ const hackathons = [
   ['L:67', 'Localhost:6767 (Supermemory Hackathon)', 'July 9–13, 2026 · Online', 'Supermemory’s first-ever hackathon. Built ACPIA, a CLI AI agent that turns digital evidence into cited, human-reviewable leads for child-protection cases.', '/hackathon/supermemory.jpeg'],
   ['BMWI', 'Build What Moves India', 'August 2026 · Online (Finale: Sept 12, Bengaluru)', 'OpenAI × Varun Mayya civic-tech hackathon to reimagine India’s public service websites. Built RefundSaathi to help businesses track pending GST refunds.', undefined, 'https://buildwhatmovesindia.com/'],
 ]
+const journalItems = [
+  ['/gallery/codex.jpeg', 'Allen at Codex Nightline'],
+  ['/gallery/codex1.jpeg', 'Builders at Codex Nightline'],
+  ['/gallery/codex2.jpeg', 'Building during Codex Nightline'],
+  ['/gallery/hs.jpeg', 'The Haritha Sethu team'],
+  ['/gallery/hs1.jpeg', 'Haritha Sethu field work'],
+] as const
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value))
 
@@ -127,7 +173,11 @@ function RightNow() {
 }
 
 function Work() {
-  return <section id="work" data-observe className="work-section"><div className="work-intro reveal-in"><p className="kicker">What I do</p><h2 className="section-display">Three disciplines.<br /><em>One builder.</em></h2><p>Ideas matter when they survive the distance from first sketch to a dependable system.</p></div><div className="capability-features">{capabilities.map(([title, copy, proof, tags], index) => <article key={title as string} className="capability-feature reveal-in"><div className="feature-visual" aria-hidden="true"><span>0{index + 1}</span><b className="feature-step"><span>{capabilitySteps[index][0]}</span><Arrow /><span>{capabilitySteps[index][1]}</span></b></div><div className="feature-copy"><p className="kicker">Feature — 0{index + 1}{index === 3 ? ' · What’s next' : ''}</p><h3>{title as string}</h3><p>{copy as string}</p><div className="feature-tags">{(tags as string[]).map((tag) => <span key={tag}>{tag}</span>)}</div><small>{index === 3 ? `Trajectory — ${proof as string}` : `Proof — ${proof as string}`}</small></div></article>)}</div></section>
+  return <section id="work" data-observe className="work-section"><div className="work-intro reveal-in"><p className="kicker">What I do</p><h2 className="section-display">Four disciplines.<br /><em>One builder.</em></h2><p>Ideas matter when they survive the distance from first sketch to a dependable system.</p></div><div className="capability-features">{capabilities.map(([title, copy, proof, tags], index) => <article key={title as string} className="capability-feature reveal-in"><div className="feature-visual" aria-hidden="true"><span>0{index + 1}</span><b className="feature-step"><span>{capabilitySteps[index][0]}</span><Arrow /><span>{capabilitySteps[index][1]}</span></b></div><div className="feature-copy"><p className="kicker">Feature — 0{index + 1}{index === 3 ? ' · What’s next' : ''}</p><h3>{title as string}</h3><p>{copy as string}</p><div className="feature-tags">{(tags as string[]).map((tag) => <span key={tag}>{tag}</span>)}</div><small>{index === 3 ? `Trajectory — ${proof as string}` : `Proof — ${proof as string}`}</small></div></article>)}</div></section>
+}
+
+function TechStack() {
+  return <section data-observe className="tech-stack-section"><div className="tech-stack-inner reveal-in"><p className="kicker">Tech stack &amp; ecosystem</p><ul aria-label="Technologies I use">{techStack.map(([name, icon]) => <li key={name}>{icon}<span>{name}</span></li>)}</ul><small>Icons by <a href="https://thesvg.org/" target="_blank" rel="noreferrer">theSVG</a></small></div></section>
 }
 
 function Projects() {
@@ -164,6 +214,10 @@ function GithubActivity() {
   return <section className="github-activity"><div className="github-activity-inner"><div className="github-activity-copy"><p className="kicker">Building, most days.</p><h2 className="section-display">A record of<br /><em>building.</em></h2><p>Recent building activity, translated into a small playable surface.</p></div><GithubCalendar username="Allen-Shibu" cellSize={16} cellGap={4} className="github-calendar-feature" /></div></section>
 }
 
+function Journal() {
+  return <section id="journal" data-scroll-section className="journal-scroll"><div className="journal-sticky"><header className="journal-heading"><p className="kicker">Beyond the commits</p><h2>Journal &amp; Insights</h2><p>Field notes, communities, experiments, and the people behind the work.</p></header><div id="journal-grid" className="journal-grid">{journalItems.map(([src, alt], index) => <figure key={src} className={`journal-card journal-card--${index + 1}`}><img src={src} alt={alt} loading="lazy" decoding="async" />{journalItems.length > 5 && index === 2 && <figcaption>View gallery <Arrow diagonal /></figcaption>}</figure>)}</div></div></section>
+}
+
 function Contact() {
   return <section id="contact" data-scroll-section data-observe className="contact-scroll"><div className="contact-sticky"><div className="closing-kinetic" aria-hidden="true"><span>THINK</span><span>BUILD</span><span>SHIP</span></div><div className="relative z-10 mx-auto flex h-full max-w-[1440px] flex-col justify-between px-5 pb-8 pt-28 sm:px-8 lg:px-16"><p className="kicker">What comes next</p><div className="max-w-5xl"><h2>To infinity<br /><span>and beyond!</span></h2><ContactLinks /></div><footer className="site-footer"><div><span>Allen Shibu · Kerala, India</span><span>Co-founder, Axter Labs · 2026</span></div><nav className="footer-connect" aria-label="Connect with me"><span>Connect with me</span><ContactLinks compact /></nav></footer></div></div></section>
 }
@@ -187,5 +241,5 @@ export default function App() {
     document.querySelectorAll('.reveal-in').forEach((element) => observer.observe(element))
     return () => observer.disconnect()
   }, [])
-  return <><Header active={active} /><ProgressRail active={active} /><main id="main"><Hero /><RightNow /><Work /><Projects /><Hackathons /><Credibility /><GithubActivity /><Contact /></main></>
+  return <><Header active={active} /><ProgressRail active={active} /><main id="main"><Hero /><RightNow /><Work /><TechStack /><Projects /><Hackathons /><Credibility /><GithubActivity /><Journal /><Contact /></main></>
 }
