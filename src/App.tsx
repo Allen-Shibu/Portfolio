@@ -215,7 +215,7 @@ function GithubActivity() {
 }
 
 function Journal() {
-  return <section id="journal" data-scroll-section className="journal-scroll"><div className="journal-sticky"><header className="journal-heading"><p className="kicker">Beyond the commits</p><h2>Journal &amp; Insights</h2><p>Field notes, communities, experiments, and the people behind the work.</p></header><div id="journal-grid" className="journal-grid">{journalItems.map(([src, alt], index) => <figure key={src} className={`journal-card journal-card--${index + 1}`}><img src={src} alt={alt} loading="lazy" decoding="async" />{journalItems.length > 5 && index === 2 && <figcaption>View gallery <Arrow diagonal /></figcaption>}</figure>)}</div></div></section>
+  return <section id="journal" data-scroll-section className="journal-scroll"><div className="journal-sticky"><header className="journal-heading"><p className="kicker">Beyond the commits</p><h2>Where I&apos;ve Been</h2><p>The People, The Rooms</p></header><div id="journal-grid" className="journal-grid">{journalItems.map(([src, alt], index) => <figure key={src} className={`journal-card journal-card--${index + 1}`}><img src={src} alt={alt} loading="lazy" decoding="async" />{journalItems.length > 5 && index === 2 && <figcaption>View gallery <Arrow diagonal /></figcaption>}</figure>)}</div></div></section>
 }
 
 function Contact() {
