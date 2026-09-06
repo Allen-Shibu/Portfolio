@@ -1,0 +1,68 @@
+import { expect, test } from 'playwright/test'
+
+test('portfolio stays readable and operable across layouts', async ({ browser }) => {
+  for (const options of [
+    { width: 1440, height: 900, reducedMotion: 'no-preference' as const },
+    { width: 1075, height: 600, reducedMotion: 'no-preference' as const },
+    { width: 390, height: 844, reducedMotion: 'no-preference' as const },
+    { width: 360, height: 640, reducedMotion: 'no-preference' as const },
+    { width: 1440, height: 900, reducedMotion: 'reduce' as const },
+  ]) {
+    const page = await browser.newPage({ viewport: options, reducedMotion: options.reducedMotion })
+    const errors: string[] = []
+    page.on('console', (message) => message.type() === 'error' && errors.push(message.text()))
+
+    await page.goto('/', { waitUntil: 'networkidle' })
+    await page.keyboard.press('Tab')
+    await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused()
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('I build technology for problems that matter.')
+    await expect(page.getByAltText('Portrait of Allen Shibu')).toBeAttached()
+    await expect(page.getByAltText('Portrait of Allen Shibu')).toHaveAttribute('src', '/pfp_site_bg.png')
+    await expect(page.locator('.hero-portrait')).toHaveCount(1)
+    await expect(page.locator('#top canvas')).toHaveCount(1)
+    await expect(page.locator('.closing-portrait, .orbit, .terrain')).toHaveCount(0)
+    await expect(page.locator('.closing-kinetic')).toContainText('THINKBUILDSHIP')
+    await expect(page.locator('.builder-signal')).toHaveCount(0)
+    await expect(page.locator('.satellite')).toHaveCount(0)
+    await expect(page.getByText('Co-founder, Axter Labs', { exact: false }).first()).toBeAttached()
+    await expect(page.getByText('Kerala’s third AWS student community', { exact: false }).first()).toBeAttached()
+    await expect(page.getByRole('heading', { name: 'Tech Co-Lead — Arch AI Club' })).toBeAttached()
+    await expect(page.getByRole('link', { name: 'Open LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/allenshibu-as/')
+    for (const capability of ['Product engineering', 'AI systems', 'Geospatial intelligence', 'Cloud infrastructure']) await expect(page.getByRole('heading', { name: capability, exact: true })).toBeAttached()
+    await expect(page.getByText('Feature — 04 · What’s next', { exact: true })).toBeAttached()
+    await expect(page.getByText('Building toward production-grade cloud systems — currently AWS-focused, SimuLearn certified.', { exact: true })).toBeAttached()
+    await expect(page.locator('.feature-visual small')).toHaveCount(0)
+    expect(await page.getByRole('heading', { name: 'Product engineering', exact: true }).evaluate((heading) => heading.scrollWidth <= heading.clientWidth)).toBe(true)
+    expect(await page.getByRole('heading', { name: 'Cloud infrastructure', exact: true }).evaluate((heading) => heading.scrollWidth <= heading.clientWidth)).toBe(true)
+    for (const project of ['Haritha Sethu', 'OpenOrbit', 'ACPIA', 'CLARA']) await expect(page.locator('#projects').getByRole('heading', { name: project, exact: true })).toBeAttached()
+    await expect(page.locator('#projects').getByText(/BunkMate|Prom Night|Univo/)).toHaveCount(0)
+    await expect(page.getByAltText('Haritha Sethu product interface')).toHaveAttribute('src', '/harithasethu.jpeg')
+    await expect(page.getByAltText('OpenOrbit product interface')).toHaveAttribute('src', '/openorbit.jpeg')
+    await expect(page.getByAltText('OpenOrbit product interface')).toHaveJSProperty('complete', true)
+    expect(await page.getByAltText('OpenOrbit product interface').evaluate((image: HTMLImageElement) => Math.abs(image.clientWidth / image.clientHeight - image.naturalWidth / image.naturalHeight) < .01)).toBe(true)
+    for (const hackathon of ['Codex Nightline', 'Solve4Public Lab 1.0', 'Localhost:6767 (Supermemory Hackathon)', 'Build What Moves India']) await expect(page.locator('#hackathons').getByRole('heading', { name: hackathon, exact: true })).toBeAttached()
+    await expect(page.locator('#hackathons').getByText("Hack'P", { exact: true })).toHaveCount(0)
+    await expect(page.locator('#hackathons').getByText('July 18, 2026 · Kochi, Kerala', { exact: true })).toBeAttached()
+    await expect(page.locator('#hackathons img[src="/hackathon/codex-icon.webp"]')).toBeAttached()
+    await expect(page.locator('#hackathons img[src="/hackathon/supermemory.jpeg"]')).toBeAttached()
+    await expect(page.locator('#hackathons').getByRole('link', { name: 'Codex Nightline' })).toHaveAttribute('href', 'https://www.codexnightline.in/#builder-selection')
+    await expect(page.locator('#hackathons').getByRole('link', { name: 'Build What Moves India' })).toHaveAttribute('href', 'https://buildwhatmovesindia.com/')
+    await expect(page.getByRole('navigation', { name: 'Connect with me' })).toBeAttached()
+    await expect(page.getByRole('heading', { name: 'To infinity and beyond!' })).toBeAttached()
+    await expect(page.getByText('Building, most days.')).toBeAttached()
+    await expect(page.getByRole('heading', { name: 'A record of building.' })).toBeAttached()
+    const gameToggle = page.getByRole('button', { name: 'Toggle retro shooter game' })
+    await expect(gameToggle).toBeAttached()
+    await gameToggle.click()
+    await expect(gameToggle).toHaveAttribute('aria-pressed', 'true')
+    await expect(page.locator('.github-activity svg rect').first()).toBeVisible()
+    await expect(page.locator('.github-activity canvas')).toBeVisible()
+    if (options.width === 1440 && options.reducedMotion === 'no-preference') await expect.poll(() => page.locator('[data-destroyed="true"]').count(), { timeout: 8000 }).toBeGreaterThan(0)
+    await expect(page.getByRole('link', { name: 'GitHub', exact: true }).first()).toHaveAttribute('href', 'https://github.com/Allen-Shibu')
+    await expect(page.getByRole('link', { name: 'X', exact: true }).first()).toHaveAttribute('href', 'https://x.com/AllenShibu')
+    await expect(page.getByRole('link', { name: 'Gmail', exact: true }).first()).toHaveAttribute('href', 'mailto:allenshibukuriakose@gmail.com')
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0)
+    expect(errors).toEqual([])
+    await page.close()
+  }
+})
