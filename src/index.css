@@ -118,6 +118,7 @@ button:focus-visible {
 .site-header--docked .dock-glyph { display: block; }
 .site-header--docked .nav-link,
 .site-header--docked .header-social {
+  position: relative;
   display: grid;
   width: 2.5rem;
   height: 2.5rem;
@@ -129,6 +130,26 @@ button:focus-visible {
   color: #d7d7d7;
   padding: 0;
 }
+.site-header--docked [data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + .55rem);
+  left: 50%;
+  border-radius: .35rem;
+  background: #000;
+  color: #fff;
+  padding: .3rem .5rem;
+  font-size: .68rem;
+  font-weight: 600;
+  line-height: 1;
+  opacity: 0;
+  transform: translate(-50%, .2rem);
+  pointer-events: none;
+  transition: opacity 120ms ease, transform 120ms ease;
+  white-space: nowrap;
+}
+.site-header--docked [data-tooltip]:hover::after,
+.site-header--docked [data-tooltip]:focus-visible::after { opacity: 1; transform: translate(-50%, 0); }
 .site-header--docked .nav-link[aria-current="location"] { background: rgba(255,255,255,.13); color: #fff; }
 .site-header--docked .header-connect { gap: .35rem; border-left: 1px solid rgba(255,255,255,.13); padding-left: .75rem; }
 
@@ -340,24 +361,11 @@ button:focus-visible {
 .journal-grid { position: absolute; inset: 0; }
 .journal-card { --journal-x: 0vw; --journal-y: 0vh; position: absolute; overflow: hidden; margin: 0; border: 1px solid rgba(238,244,233,.18); border-radius: .8rem; background: #0d1712; box-shadow: 0 1.5rem 5rem rgba(0,0,0,.35); transform: translate3d(calc(var(--section-progress) * var(--journal-x)), calc(var(--section-progress) * var(--journal-y)), 0) scale(calc(1 + var(--section-progress) * .24)); will-change: transform; }
 .journal-card img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.journal-card--1 { --journal-x: -24vw; --journal-y: -8vh; left: 3%; top: 24%; width: 16%; height: 34%; }
-.journal-card--2 { --journal-x: -8vw; --journal-y: -19vh; left: 20%; top: max(9rem, 22%); width: 29%; height: 22%; }
-.journal-card--3 { --journal-y: -16vh; left: 52%; top: 20%; width: 27%; height: 21%; }
-.journal-card--4 { --journal-x: 25vw; --journal-y: -8vh; right: 3%; top: 24%; width: 16%; height: 30%; }
-.journal-card--5 { --journal-x: -20vw; --journal-y: 12vh; left: 3%; top: 62%; width: 27%; height: 20%; }
-.journal-card--6 { --journal-x: -8vw; --journal-y: 20vh; left: 32%; top: 47%; width: 15%; height: 34%; }
-.journal-card--7 { --journal-x: 8vw; --journal-y: 12vh; left: 50%; top: 45%; width: 29%; height: 22%; }
-.journal-card--8 { --journal-x: 22vw; --journal-y: 8vh; right: 3%; top: 57%; width: 15%; height: 33%; }
-.journal-card--9 { --journal-x: -12vw; --journal-y: 22vh; left: 19%; top: 69%; width: 15%; height: 29%; }
-.journal-card--10 { --journal-x: 10vw; --journal-y: 20vh; left: 37%; top: 72%; width: 28%; height: 21%; }
-.journal-grid:not(.journal-grid--expanded) .journal-card--extra { display: none; }
-.journal-grid:not(.journal-grid--expanded) .journal-card--1 { left: 4%; top: 29%; width: 27%; height: 49%; }
-.journal-grid:not(.journal-grid--expanded) .journal-card--2 { left: 32%; top: max(9rem, 22%); width: 45%; height: 27%; }
-.journal-grid:not(.journal-grid--expanded) .journal-card--3 { left: 32%; top: 50%; width: 34%; height: 28%; }
-.journal-grid:not(.journal-grid--expanded) .journal-card--4 { right: 2%; top: 50%; width: 31%; height: 28%; }
-.journal-grid:not(.journal-grid--expanded) .journal-card--5 { left: 4%; top: 79%; width: 45%; height: 20%; }
-.journal-view-toggle { position: absolute; z-index: 3; bottom: 3rem; left: 50%; display: inline-flex; align-items: center; gap: .5rem; border: 1px solid rgba(255,255,255,.28); border-radius: 999px; background: #0a0a0a; color: #fff; padding: .8rem 1.1rem; opacity: 0; transform: translate(-50%, 1rem); pointer-events: none; transition: opacity 240ms ease, transform 240ms ease; }
-.journal-scroll[data-past-midpoint] .journal-view-toggle { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+.journal-card--1 { --journal-x: -24vw; --journal-y: -8vh; left: 4%; top: 29%; width: 27%; height: 49%; }
+.journal-card--2 { --journal-x: -8vw; --journal-y: -19vh; left: 32%; top: max(9rem, 22%); width: 45%; height: 27%; }
+.journal-card--3 { --journal-y: -16vh; left: 32%; top: 50%; width: 34%; height: 28%; }
+.journal-card--4 { --journal-x: 25vw; --journal-y: -8vh; right: 2%; top: 50%; width: 31%; height: 28%; }
+.journal-card--5 { --journal-x: -20vw; --journal-y: 12vh; left: 4%; top: 79%; width: 45%; height: 20%; }
 
 .contact-scroll { height: 180svh; }
 .contact-sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; background: #07110e; }
@@ -456,7 +464,6 @@ button:focus-visible {
   .journal-heading h2 { white-space: normal; }
   .journal-grid { position: relative; display: grid; gap: 1rem; }
   .journal-card, .journal-card--1, .journal-card--2, .journal-card--3, .journal-card--4, .journal-card--5 { position: relative; inset: auto; width: 100%; height: auto; aspect-ratio: 4 / 3; transform: none; }
-  .journal-view-toggle { position: relative; inset: auto; margin: 2rem auto 0; opacity: 1; transform: none; pointer-events: auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -477,7 +484,6 @@ button:focus-visible {
   .journal-heading { position: relative; inset: auto; width: 100%; margin-bottom: 3rem; transform: none; opacity: 1; }
   .journal-grid { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
   .journal-card, .journal-card--1, .journal-card--2, .journal-card--3, .journal-card--4, .journal-card--5 { position: relative; inset: auto; width: 100%; height: auto; aspect-ratio: 4 / 3; transform: none; }
-  .journal-view-toggle { position: relative; inset: auto; margin: 2rem auto 0; opacity: 1; transform: none; pointer-events: auto; }
   .reveal-in { opacity: 1; transform: none; }
 }
 
@@ -547,7 +553,6 @@ body { background: #fff; color: #0a0a0a; }
 .github-calendar-feature { box-shadow: 0 2rem 6rem rgba(0,0,0,.14); }
 
 .journal-card { border-color: rgba(0,0,0,.2); background: #f3f3f3; box-shadow: 0 1.5rem 5rem rgba(0,0,0,.18); }
-.journal-view-toggle { border-color: rgba(0,0,0,.28); }
 
 .closing-link { border-color: rgba(0,0,0,.5); }
 .connect-links a { border-color: rgba(0,0,0,.26); color: #000; }

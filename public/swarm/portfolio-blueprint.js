@@ -86,7 +86,7 @@ window.portfolioBlueprint = () => {
     { id: 'hackathons', root: '#hackathons', anchor: '.hackathons-header h2', text: ['.hackathons-header h2', '.hackathons-header p', '.hackathon-list small', '.hackathon-list h3', '.hackathon-list p'], duplicate: '.hackathon-list li' },
     { id: 'credibility', root: '.credibility-section', anchor: '.credibility-intro h2', text: ['.credibility-intro h2', '.credibility-list h3', '.credibility-list p'], duplicate: '.credibility-list li' },
     { id: 'activity', root: '.github-activity', anchor: '.github-activity-copy h2', text: ['.github-activity-copy h2', '.github-activity-copy > p'], rect: ['.github-calendar-build'] },
-    { id: 'journal', root: '#journal', anchor: '.journal-heading h2', text: ['.journal-heading h2', '.journal-heading p'], duplicate: '.journal-card' },
+    { id: 'journal', root: '#gallery', anchor: '.journal-heading h2', text: ['.journal-heading h2', '.journal-heading p'], duplicate: '.journal-card' },
     { id: 'contact', root: '#contact', anchor: '.contact-sticky h2', text: ['.contact-sticky h2', '.closing-kinetic span', '.site-footer > div span'], duplicate: ['.contact-sticky .connect-links:not(.connect-links--compact) a', '.connect-links--compact a'] },
   ]
 

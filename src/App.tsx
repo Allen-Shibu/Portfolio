@@ -58,7 +58,7 @@ const projects = [
   { name: 'CLA-RA', copy: 'Drop a company name. An agentic research loop checks whether the business behind it holds up.', stack: 'Go/Gin · Serper · OpenRouter', href: 'https://cla-ra.vercel.app/', action: 'Open product', image: '/CLA-RA.png' },
 ]
 
-const navItems = [['now', 'Now'], ['projects', 'Projects'], ['contact', 'Connect']]
+const navItems = [['now', 'Now'], ['skills', 'Skills'], ['projects', 'Projects']]
 const roles = [
   ['Co-founder — Astrelon Labs', 'Leading product and engineering for Haritha Sethu, a civic remote-sensing product built for local decision-making.'],
   ['AWS Student Builders Group Leader', 'Selected to lead and grow Kerala’s third AWS student community.'],
@@ -82,11 +82,6 @@ const journalItems = [
   ['/gallery/codex2.jpeg', 'Building during Codex Nightline'],
   ['/gallery/hs.jpeg', 'The Haritha Sethu team'],
   ['/gallery/hs1.jpeg', 'Haritha Sethu field work'],
-  ['/gallery/aws.jpeg', 'Allen speaking at the AWS Student Builder Group kickoff'],
-  ['/gallery/aws_group.jpeg', 'AWS Student Builder Group kickoff attendees at GECT'],
-  ['/gallery/kph.jpeg', 'Allen with another attendee beside the KPH Hackathon banner'],
-  ['/gallery/kph_!.jpeg', 'KPH Hackathon group selfie'],
-  ['/gallery/kph_with_thomson.jpeg', 'Allen with Thomson at KPH Hackathon'],
 ] as const
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value))
@@ -101,7 +96,6 @@ function useScrollCraft() {
         const rect = section.getBoundingClientRect()
         const progress = clamp(-rect.top / Math.max(1, rect.height - viewport))
         section.style.setProperty('--section-progress', String(progress))
-        if (section.id === 'journal') section.toggleAttribute('data-past-midpoint', progress > .55)
       })
     }
     const requestUpdate = () => { if (!frame) frame = requestAnimationFrame(update) }
@@ -132,11 +126,17 @@ function ContactGlyph({ label, darkSurface = false }: { label: string; darkSurfa
 }
 
 function HeaderContactLinks({ darkSurface = false }: { darkSurface?: boolean }) {
-  return <nav className="header-connect" aria-label="Social links">{contactLinks.map(([label, href]) => <a key={label} className="header-social pressable" href={href} target={href.startsWith('mailto:') ? undefined : '_blank'} rel={href.startsWith('mailto:') ? undefined : 'noreferrer'} aria-label={`Open ${label}`} title={label}><ContactGlyph label={label} darkSurface={darkSurface} /></a>)}</nav>
+  return <nav className="header-connect" aria-label="Social links">{contactLinks.map(([label, href]) => <a key={label} className="header-social pressable" href={href} target={href.startsWith('mailto:') ? undefined : '_blank'} rel={href.startsWith('mailto:') ? undefined : 'noreferrer'} aria-label={`Open ${label}`} data-tooltip={label}><ContactGlyph label={label} darkSurface={darkSurface} /></a>)}</nav>
 }
 
 function DockGlyph({ id }: { id: string }) {
-  const path = id === 'top' ? 'M3 10 10 3l7 7v7H6v-7m3 7v-5h2v5' : id === 'now' ? 'M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm0 3v4l3 2' : id === 'projects' ? 'M3 3h5v5H3V3Zm9 0h5v5h-5V3ZM3 12h5v5H3v-5Zm9 0h5v5h-5v-5Z' : 'M3 5h14v10H3V5Zm1 1 6 5 6-5'
+  const path = id === 'top' ? 'M3 10 10 3l7 7v7H6v-7m3 7v-5h2v5'
+    : id === 'now' ? 'M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm0 3v4l3 2'
+      : id === 'skills' ? 'M6 5 3 10l3 5m8-10 3 5-3 5M12 3 8 17'
+        : id === 'projects' ? 'M3 3h5v5H3V3Zm9 0h5v5h-5V3ZM3 12h5v5H3v-5Zm9 0h5v5h-5v-5Z'
+          : id === 'proof' ? 'M4 10.5 8 14l8-9M10 3a7 7 0 1 0 7 7'
+            : id === 'gallery' ? 'M3 4h14v12H3V4Zm2 9 3-3 2 2 2-2 3 3M13 7h.01'
+              : 'M3 5h14v10H3V5Zm1 1 6 5 6-5'
   return <svg className="dock-glyph" viewBox="0 0 20 20" aria-hidden="true" fill="none"><path d={path} stroke="currentColor" strokeWidth="1.45" strokeLinecap="round" strokeLinejoin="round" /></svg>
 }
 
@@ -150,11 +150,11 @@ function HeroPortrait() {
 }
 
 function Header({ active }: { active: string }) {
-  return <><a href="#main" className="skip-link">Skip to content</a><header className="site-header site-header--docked fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5"><div className="site-header-shell glass mx-auto flex h-14 max-w-[1440px] items-center justify-between rounded-2xl px-3 pl-4 sm:px-5"><nav className="primary-nav hidden items-center gap-1 md:flex" aria-label="Primary navigation"><a href="#top" className="nav-link dock-home" aria-current={active === 'top' ? 'location' : undefined} aria-label="Home" title="Home"><DockGlyph id="top" /><span className="nav-label">Home</span></a>{navItems.map(([id, label]) => <a key={id} href={`#${id}`} className="nav-link" aria-current={active === id ? 'location' : undefined} aria-label={label} title={label}><DockGlyph id={id} /><span className="nav-label">{label}</span></a>)}</nav><HeaderContactLinks darkSurface /></div></header></>
+  return <><a href="#main" className="skip-link">Skip to content</a><header className="site-header site-header--docked fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5"><div className="site-header-shell glass mx-auto flex h-14 max-w-[1440px] items-center justify-between rounded-2xl px-3 pl-4 sm:px-5"><nav className="primary-nav hidden items-center gap-1 md:flex" aria-label="Primary navigation"><a href="#top" className="nav-link dock-home" aria-current={active === 'top' ? 'location' : undefined} aria-label="Home" data-tooltip="Home"><DockGlyph id="top" /><span className="nav-label">Home</span></a>{navItems.map(([id, label]) => <a key={id} href={`#${id}`} className="nav-link" aria-current={active === id ? 'location' : undefined} aria-label={label} data-tooltip={label}><DockGlyph id={id} /><span className="nav-label">{label}</span></a>)}</nav><HeaderContactLinks darkSurface /></div></header></>
 }
 
 function Hero() {
-  return <section id="top" data-scroll-section className="hero-scroll"><div className="hero-sticky"><KineticGrid className="hero-grid" globalColor="monochrome"><HeroPortrait /><div className="relative z-10 mx-auto flex h-full max-w-[1440px] items-end px-5 pb-16 pt-28 sm:px-8 sm:pb-20 lg:items-center lg:px-16"><div className="max-w-[1050px]"><h1 className="hero-title hero-enter">Hi, I&apos;m<br /> <span>Allen Shibu</span></h1><p className="hero-position hero-enter">Product builder · Co-founder, Astrelon Labs · AWS Student Builders Group Leader.</p></div></div></KineticGrid></div></section>
+  return <section id="top" data-scroll-section className="hero-scroll"><div className="hero-sticky"><KineticGrid className="hero-grid" globalColor="monochrome"><HeroPortrait /><div className="relative z-10 mx-auto flex h-full max-w-[1440px] items-end px-5 pb-16 pt-28 sm:px-8 sm:pb-20 lg:items-center lg:px-16"><div className="max-w-[1050px]"><h1 className="hero-title hero-enter">Hi, I&apos;m<br /> <span>Allen Shibu</span></h1><p className="hero-position hero-enter">Product builder · <span className="whitespace-nowrap">Co-founder, Astrelon Labs</span> · AWS Student Builders Group Leader.</p></div></div></KineticGrid></div></section>
 }
 
 function RightNow() {
@@ -162,7 +162,7 @@ function RightNow() {
 }
 
 function TechStack() {
-  return <section data-observe className="tech-stack-section"><div className="tech-stack-inner reveal-in"><h2 className="tech-stack-title">Tech stack &amp; ecosystem</h2><ul aria-label="Technologies I use">{techStack.map(([name, icon]) => <li key={name}>{icon}<span>{name}</span></li>)}</ul><small>Icons by <a href="https://thesvg.org/" target="_blank" rel="noreferrer">theSVG</a></small></div></section>
+  return <section id="skills" data-observe className="tech-stack-section"><div className="tech-stack-inner reveal-in"><h2 className="tech-stack-title">Tech stack &amp; ecosystem</h2><ul aria-label="Technologies I use">{techStack.map(([name, icon]) => <li key={name}>{icon}<span>{name}</span></li>)}</ul><small>Icons by <a href="https://thesvg.org/" target="_blank" rel="noreferrer">theSVG</a></small></div></section>
 }
 
 function Projects() {
@@ -193,7 +193,7 @@ function Hackathons() {
 }
 
 function Credibility() {
-  return <section data-observe className="credibility-section"><div className="mx-auto max-w-[1440px] px-5 py-28 sm:px-8 lg:px-16 lg:py-40"><div className="credibility-intro reveal-in"><h2 className="section-display">Momentum with<br /><em>receipts.</em></h2></div><ol className="credibility-list">{credibility.map(([title, copy, href], index) => <li key={title} className="reveal-in"><span>0{index + 1}</span><h3>{href ? <a href={href} target="_blank" rel="noreferrer">{title}<Arrow diagonal /></a> : title}</h3><p>{copy}</p></li>)}</ol></div></section>
+  return <section id="proof" data-observe className="credibility-section"><div className="mx-auto max-w-[1440px] px-5 py-28 sm:px-8 lg:px-16 lg:py-40"><div className="credibility-intro reveal-in"><h2 className="section-display">Momentum with<br /><em>receipts.</em></h2></div><ol className="credibility-list">{credibility.map(([title, copy, href], index) => <li key={title} className="reveal-in"><span>0{index + 1}</span><h3>{href ? <a href={href} target="_blank" rel="noreferrer">{title}<Arrow diagonal /></a> : title}</h3><p>{copy}</p></li>)}</ol></div></section>
 }
 
 function GithubActivity() {
@@ -201,8 +201,7 @@ function GithubActivity() {
 }
 
 function Journal() {
-  const [expanded, setExpanded] = useState(false)
-  return <section id="journal" data-scroll-section className="journal-scroll"><div className="journal-sticky"><header className="journal-heading"><h2>Where I&apos;ve Been</h2><p>The People, The Rooms</p></header><div id="journal-grid" className={`journal-grid${expanded ? ' journal-grid--expanded' : ''}`}>{journalItems.map(([src, alt], index) => <figure key={src} className={`journal-card journal-card--${index + 1}${index > 4 ? ' journal-card--extra' : ''}`}><img src={src} alt={alt} loading="lazy" decoding="async" /></figure>)}</div><button type="button" className="journal-view-toggle" aria-controls="journal-grid" aria-expanded={expanded} onClick={() => setExpanded((open) => !open)}>{expanded ? 'Close gallery' : 'View gallery'} <Arrow diagonal /></button></div></section>
+  return <section id="gallery" data-scroll-section className="journal-scroll"><div className="journal-sticky"><header className="journal-heading"><h2>Where I&apos;ve Been</h2><p>The People, The Rooms</p></header><div className="journal-grid">{journalItems.map(([src, alt], index) => <figure key={src} className={`journal-card journal-card--${index + 1}`}><img src={src} alt={alt} loading="lazy" decoding="async" /></figure>)}</div></div></section>
 }
 
 function Contact() {
@@ -213,7 +212,7 @@ export default function App() {
   const [active, setActive] = useState('top')
   useScrollCraft()
   useEffect(() => {
-    const sections = [...document.querySelectorAll<HTMLElement>('#top, #now, #projects, #contact')]
+    const sections = [...document.querySelectorAll<HTMLElement>('#top, #now, #skills, #projects')]
     const update = () => {
       let current = 'top'
       sections.forEach((section) => { if (section.getBoundingClientRect().top <= innerHeight / 2) current = section.id })
