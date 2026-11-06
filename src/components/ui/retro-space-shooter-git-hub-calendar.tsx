@@ -21,7 +21,7 @@ export type GithubCalendarProps = {
   className?: string
 }
 
-const DARK: ThemeColors = { level0: '#0a0a0a', level1: '#0e4429', level2: '#006d32', level3: '#26a641', level4: '#39d353' }
+const DARK: ThemeColors = { level0: '#f2f2f2', level1: '#d0d0d0', level2: '#999999', level3: '#555555', level4: '#111111' }
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 const parseDate = (value: string) => { const [year, month, day] = value.split('-').map(Number); return new Date(year, (month || 1) - 1, day || 1) }
@@ -145,9 +145,9 @@ export const GithubCalendar = memo(function GithubCalendar({ username, data: dat
       if (!reduceMotion) playerX = 22 + (width - 44) * (.5 + .5 * Math.sin((now - startedAt) / 1100))
       if (!reduceMotion && now - lastShot > 180) { bullets.push({ x: playerX, y: height - 42 }); lastShot = now }
       context.clearRect(0, 0, width, height)
-      context.fillStyle = 'rgba(255,255,255,.45)'
+      context.fillStyle = 'rgba(0,0,0,.3)'
       stars.forEach((star) => { star.y += star.speed; if (star.y > height) star.y = 0; context.fillRect(star.x, star.y, 1, 1) })
-      context.fillStyle = '#fbbf24'
+      context.fillStyle = '#111111'
       bullets.forEach((bullet) => {
         bullet.y -= 6
         context.fillRect(bullet.x - 1.5, bullet.y, 3, 8)
@@ -176,12 +176,12 @@ export const GithubCalendar = memo(function GithubCalendar({ username, data: dat
 
       context.save()
       context.translate(playerX, height - 17)
-      context.shadowColor = '#38bdf8'; context.shadowBlur = 9
-      context.fillStyle = '#38bdf8'
+      context.shadowColor = '#111111'; context.shadowBlur = 9
+      context.fillStyle = '#111111'
       context.beginPath(); context.moveTo(0, -20); context.lineTo(7, -7); context.lineTo(18, 4); context.lineTo(8, 2); context.lineTo(5, 10); context.lineTo(-5, 10); context.lineTo(-8, 2); context.lineTo(-18, 4); context.lineTo(-7, -7); context.closePath(); context.fill()
       context.shadowBlur = 0
-      context.fillStyle = '#e0f2fe'; context.beginPath(); context.moveTo(0, -14); context.lineTo(4, -5); context.lineTo(-4, -5); context.closePath(); context.fill()
-      context.fillStyle = '#ff6b35'; context.fillRect(-5, 10, 3, 5); context.fillRect(2, 10, 3, 5)
+      context.fillStyle = '#f5f5f5'; context.beginPath(); context.moveTo(0, -14); context.lineTo(4, -5); context.lineTo(-4, -5); context.closePath(); context.fill()
+      context.fillStyle = '#777777'; context.fillRect(-5, 10, 3, 5); context.fillRect(2, 10, 3, 5)
       context.restore()
       if (!reduceMotion) frame = requestAnimationFrame(loop)
     }
@@ -190,13 +190,13 @@ export const GithubCalendar = memo(function GithubCalendar({ username, data: dat
   }, [cellSize, colors, data, gameActive, id, step, svgHeight, svgWidth, weeks])
 
   if (loading) return <CalendarSkeleton cellSize={cellSize} cellGap={cellGap} />
-  if (error) return <div className={cn('rounded-md border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700', className)}>{error}</div>
+  if (error) return <div className={cn('rounded-md border border-neutral-400 bg-white px-4 py-3 text-sm text-black', className)}>{error}</div>
 
-  return <div className={cn('w-fit max-w-full overflow-hidden rounded-sm border border-neutral-800 bg-[#070807] text-neutral-200 shadow-sm', className)}>
+  return <div className={cn('w-fit max-w-full overflow-hidden rounded-sm border border-neutral-300 bg-white text-neutral-900 shadow-sm', className)}>
     <div className="flex w-fit max-w-full flex-col gap-3 p-3">
       <div ref={scrollRef} className={cn('relative max-w-full overflow-x-auto', gameActive && 'pb-[72px]')} style={{ scrollbarWidth: 'none' }}>
         <svg width={svgWidth} height={svgHeight} viewBox={`0 0 ${svgWidth} ${svgHeight}`} className="overflow-visible">
-          {showMonthLabels && !gameActive && monthLabels.map(({ label, weekIndex }) => <text key={`${label}-${weekIndex}`} x={weekIndex * step} y={12} fontSize={11} fill="#e5e7eb">{label}</text>)}
+          {showMonthLabels && !gameActive && monthLabels.map(({ label, weekIndex }) => <text key={`${label}-${weekIndex}`} x={weekIndex * step} y={12} fontSize={11} fill="#111111">{label}</text>)}
           {weeks.map((week, weekIndex) => week.map((date, dayIndex) => {
             if (!date) return null
             const entry = data[date]
@@ -208,8 +208,8 @@ export const GithubCalendar = memo(function GithubCalendar({ username, data: dat
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
         {showLegend && <div className="flex items-center gap-2"><span>Less</span>{([0, 1, 2, 3, 4] as ContributionLevel[]).map((level) => <svg key={level} width={cellSize} height={cellSize}><rect width={cellSize} height={cellSize} rx={cellRadius} fill={colors[`level${level}` as keyof ThemeColors]} /></svg>)}<span>More</span></div>}
-        <div className="flex items-center gap-2 border-l border-neutral-700 pl-3"><span>Game mode</span><button type="button" aria-pressed={gameActive} aria-label="Toggle retro shooter game" onClick={() => setGameActive((active) => !active)} className={cn('relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border border-white/10 transition-colors duration-200', gameActive ? 'bg-emerald-500' : 'bg-neutral-800')}><span className={cn('absolute left-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-transform duration-200', gameActive ? 'translate-x-4' : 'translate-x-0')} /></button></div>
-        {showStats && username && <a href={`https://github.com/${username}`} target="_blank" rel="noreferrer" className="ml-auto whitespace-nowrap font-medium text-neutral-400"><b className="text-neutral-100">{username}</b> · <strong className="text-[#39d353]">{stats.total.toLocaleString()}</strong> contributions</a>}
+        <div className="flex items-center gap-2 border-l border-neutral-300 pl-3"><span>Game mode</span><button type="button" aria-pressed={gameActive} aria-label="Toggle retro shooter game" onClick={() => setGameActive((active) => !active)} className={cn('relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border border-black/20 transition-colors duration-200', gameActive ? 'bg-black' : 'bg-neutral-300')}><span className={cn('absolute left-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-transform duration-200', gameActive ? 'translate-x-4' : 'translate-x-0')} /></button></div>
+        {showStats && username && <a href={`https://github.com/${username}`} target="_blank" rel="noreferrer" className="ml-auto whitespace-nowrap font-medium text-neutral-600"><b className="text-black">{username}</b> · <strong className="text-black">{stats.total.toLocaleString()}</strong> contributions</a>}
       </div>
     </div>
   </div>

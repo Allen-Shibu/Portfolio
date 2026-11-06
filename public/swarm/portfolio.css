@@ -1,0 +1,34 @@
+#swarm-root { position: absolute; top: 0; left: 0; width: 100%; overflow-x: clip; z-index: 100; pointer-events: none; transition: opacity 180ms ease; }
+.swarm-text-layer { position: absolute; top: 0; left: 0; z-index: 99; width: 100%; overflow-x: clip; pointer-events: none; transition: opacity 180ms ease; }
+.swarm-generated-text { position: absolute; white-space: pre-wrap; overflow-wrap: break-word; }
+.swarm-generated-rect { position: absolute; background: #d9d9d9; }
+.swarm-generated-rect.is-styled { background: transparent; }
+.swarm-generated-text.is-editing::after { display: inline-block; width: 1px; height: 1em; margin-left: 1px; background: currentColor; content: ""; vertical-align: text-bottom; animation: swarm-blink 1s steps(1) infinite; }
+.swarm-generated-text.is-selected { background: rgba(13,153,255,.28); }
+.swarm-typing-source:not(.swarm-task-done) { opacity: 0 !important; }
+.swarm-build-source { opacity: 0 !important; pointer-events: none !important; }
+.swarm-build-source.swarm-built-source { opacity: 1 !important; pointer-events: auto !important; animation: swarm-reveal 240ms ease both; }
+@keyframes swarm-reveal { from { opacity: 0; } to { opacity: 1; } }
+#swarm-root .swarm-stage { position: relative; width: 100%; overflow-x: clip; pointer-events: none; }
+#swarm-root .canvas { position: absolute; top: 0; left: 0; transform-origin: 0 0; }
+#swarm-root .paths { position: absolute; inset: 0; overflow: visible; }
+#swarm-root .el-text { position: absolute; font-feature-settings: "cv11", "ss01"; }
+#swarm-root .el-rect { position: absolute; transition: background-color .22s ease, border-radius .22s ease, box-shadow .22s ease; }
+#swarm-root .text-sel { background: rgba(13,153,255,.28); }
+#swarm-root .caret { display: inline-block; width: 1px; margin-left: 1px; vertical-align: text-bottom; background: currentColor; animation: swarm-blink 1s steps(1) infinite; }
+@keyframes swarm-blink { 50% { opacity: 0; } }
+#swarm-root .overlay, #swarm-root .cursors { position: absolute; top: 0; left: 0; width: 100%; pointer-events: none; }
+#swarm-root .overlay { z-index: 10; }
+#swarm-root .overlay svg { position: absolute; top: 0; left: 0; overflow: visible; }
+#swarm-root .cursors { z-index: 30; }
+#swarm-root .cursor { position: absolute; top: 0; left: 0; will-change: transform; }
+#swarm-root .cursor svg { position: absolute; overflow: visible; filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.28)); }
+#swarm-root .badge { position: absolute; transform: translateX(-50%); padding: 1px 4px; border-radius: 2px; color: #fff; font: 600 11px/16px Inter,system-ui,sans-serif; white-space: nowrap; }
+#swarm-root .ruler { position: fixed; z-index: 20; background: #2c2c2c; pointer-events: none; }
+#swarm-root .ruler-top { top: 0; left: 0; right: 0; height: 20px; border-bottom: 1px solid #3a3a3a; }
+#swarm-root .ruler-left { top: 0; left: 0; bottom: 0; width: 20px; border-right: 1px solid #3a3a3a; }
+#swarm-root .ruler svg { display: block; }
+#swarm-root .ruler-corner { position: fixed; z-index: 21; top: 0; left: 0; width: 20px; height: 20px; background: #2c2c2c; }
+#swarm-root .rtext { font: 500 9px Inter,system-ui,sans-serif; fill: #8c8c8c; }
+#swarm-root .rsel { fill: #0d99ff; }
+@media (prefers-reduced-motion: reduce) { #swarm-root { display: none; } }

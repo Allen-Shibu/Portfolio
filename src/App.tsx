@@ -53,33 +53,22 @@ const techStack = [
   ['Blender', <Blender />],
 ] as const
 const projects = [
-  { name: 'Haritha Sethu', kind: 'Civic remote sensing', copy: 'An Axter Labs product turning Earth observation data into local environmental intelligence for Kerala gram panchayats.', stack: 'Earth Engine · PostGIS · Remote sensing · AI', href: 'https://github.com/Allen-Shibu/HarithaSethu', action: 'View repository', image: '/harithasethu.jpeg' },
-  { name: 'OpenOrbit', kind: 'Campus infrastructure', copy: 'Event discovery and registration across campuses, with a no-code form builder and payments. Shipped to 100+ active users.', stack: 'React 19 · Go/Gin · Neon · Razorpay', href: 'https://openorbit.app/', action: 'Open product', image: '/openorbit.jpeg' },
-  { name: 'ACPIA', kind: 'Investigation agent', copy: 'A CLI assistant for child-protection investigations with isolated evidence, cross-case correlation, and citation-first answers.', stack: 'Python · Gemma 3 Vision · Qwen 2.5', href: 'https://github.com/Allen-Shibu/ACPIA', action: 'View repository' },
-  { name: 'CLARA', kind: 'Agentic due diligence', copy: 'Drop a company name. An agentic research loop checks whether the business behind it holds up.', stack: 'Go/Gin · Serper · OpenRouter', href: 'https://cla-ra.vercel.app/', action: 'Open product' },
+  { name: 'Haritha Sethu', copy: 'An Astrelon Labs product turning Earth observation data into local environmental intelligence for Kerala gram panchayats.', stack: 'Earth Engine · PostGIS · Remote sensing · AI', href: 'https://github.com/Allen-Shibu/HarithaSethu', action: 'View repository', image: '/harithasethu.jpeg' },
+  { name: 'OpenOrbit', copy: 'Event discovery and registration across campuses, with a no-code form builder and payments. Shipped to 100+ active users.', stack: 'React 19 · Go/Gin · Neon · Razorpay', href: 'https://openorbit.app/', action: 'Open product', image: '/openorbit.jpeg' },
+  { name: 'CLA-RA', copy: 'Drop a company name. An agentic research loop checks whether the business behind it holds up.', stack: 'Go/Gin · Serper · OpenRouter', href: 'https://cla-ra.vercel.app/', action: 'Open product', image: '/CLA-RA.png' },
 ]
 
-const navItems = [['now', 'Now'], ['work', 'What I do'], ['projects', 'Projects'], ['contact', 'Connect']]
+const navItems = [['now', 'Now'], ['projects', 'Projects'], ['contact', 'Connect']]
 const roles = [
-  ['Co-founder — Axter Labs', 'Leading product and engineering for Haritha Sethu, a civic remote-sensing product built for local decision-making.'],
+  ['Co-founder — Astrelon Labs', 'Leading product and engineering for Haritha Sethu, a civic remote-sensing product built for local decision-making.'],
   ['AWS Student Builders Group Leader', 'Selected to lead and grow Kerala’s third AWS student community.'],
-  ['Tech Co-Lead — Arch AI Club', 'Co-leading a community of AI and cloud enthusiasts who discuss, experiment, and build with AI.'],
   ['B.Tech Computer Science, GECT', 'Second-year student at Government Engineering College Thrissur, started in 2025.'],
-  ['Direction', 'Remote sensing, ambitious product engineering, and fintech-grade systems.'],
 ]
-const capabilities = [
-  ['Product engineering', 'I take products from idea through backend, interface, deployment, and testing.', 'OpenOrbit', ['IDEA → SHIP', 'BACKEND', 'INTERFACE', 'TESTING']],
-  ['AI systems', 'I build agents, evidence-grounded reasoning, automation, and vision workflows.', 'ACPIA · CLARA', ['AGENTS', 'EVIDENCE', 'AUTOMATION', 'VISION']],
-  ['Geospatial intelligence', 'I work with Earth Engine, PostGIS, remote-sensing indices, SAR, and foundation models.', 'Haritha Sethu', ['EARTH ENGINE', 'POSTGIS', 'SAR', 'FOUNDATION MODELS']],
-  ['Cloud infrastructure', 'Building toward production-grade cloud systems — currently AWS-focused, SimuLearn certified.', 'AWS-focused · SimuLearn certified', ['AWS', 'CLOUD SYSTEMS', 'SIMULEARN', 'PRODUCTION DIRECTION']],
-]
-const capabilitySteps = [['IDEA', 'SHIP'], ['REASON', 'ACT'], ['PIXEL', 'SIGNAL'], ['LEARN', 'SCALE']]
 const credibility = [
-  ['AWS Student Builders Group Leader', 'Selected to lead Kerala’s third AWS student community.'],
-  ['AWS SimuLearn', 'Generative AI Practitioner certification.'],
-  ['Solve4Public Lab 1.0', 'Selected and successfully demonstrated Haritha Sethu.'],
-  ['Axter Labs', 'Co-founder.'],
-  ['OpenOrbit', 'Verified 100+ active users.'],
+  ['AWS SimuLearn', 'Generative AI Practitioner certification.', 'https://www.credly.com/badges/9d3fe6cc-28c8-4d49-9441-b533647c47d1/public_url'],
+  ['AWS Student Builders Group Leader', 'Selected to lead Kerala’s third AWS student community.', 'https://www.credly.com/badges/2f256c90-d63a-4d4c-a23e-bc99b8c6c8a6/public_url'],
+  ['Astrelon Labs', 'Co-founder.', 'https://www.linkedin.com/company/astrelon-labs/'],
+  ['Kerala Startup Mission', 'Idea Box — Expert Evaluation. Received positive expert feedback through KSUM’s Idea Box Portal, with the idea recognized as promising and recommended for further development towards a Minimum Viable Product (MVP).'],
 ]
 const hackathons = [
   ['CN', 'Codex Nightline', 'July 18, 2026 · Kochi, Kerala', 'World’s first AI hackathon inside a moving Kochi Metro train. Selected as 1 of 100 builders from 1,200+ registrations for a solo overnight build sprint.', '/hackathon/codex-icon.webp', 'https://www.codexnightline.in/#builder-selection'],
@@ -93,36 +82,35 @@ const journalItems = [
   ['/gallery/codex2.jpeg', 'Building during Codex Nightline'],
   ['/gallery/hs.jpeg', 'The Haritha Sethu team'],
   ['/gallery/hs1.jpeg', 'Haritha Sethu field work'],
+  ['/gallery/aws.jpeg', 'Allen speaking at the AWS Student Builder Group kickoff'],
+  ['/gallery/aws_group.jpeg', 'AWS Student Builder Group kickoff attendees at GECT'],
+  ['/gallery/kph.jpeg', 'Allen with another attendee beside the KPH Hackathon banner'],
+  ['/gallery/kph_!.jpeg', 'KPH Hackathon group selfie'],
+  ['/gallery/kph_with_thomson.jpeg', 'Allen with Thomson at KPH Hackathon'],
 ] as const
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value))
 
 function useScrollCraft() {
   useEffect(() => {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     let frame = 0
     const update = () => {
       frame = 0
       const viewport = window.innerHeight
-      document.documentElement.style.setProperty('--page-progress', String(window.scrollY / Math.max(1, document.documentElement.scrollHeight - viewport)))
       document.querySelectorAll<HTMLElement>('[data-scroll-section]').forEach((section) => {
         const rect = section.getBoundingClientRect()
         const progress = clamp(-rect.top / Math.max(1, rect.height - viewport))
         section.style.setProperty('--section-progress', String(progress))
-        const track = section.querySelector<HTMLElement>('[data-horizontal-track]')
-        if (track && !reduceMotion.matches && window.innerWidth >= 768) track.style.transform = `translate3d(${-progress * Math.max(0, track.scrollWidth - window.innerWidth)}px, 0, 0)`
-        else if (track) track.style.transform = ''
+        if (section.id === 'journal') section.toggleAttribute('data-past-midpoint', progress > .55)
       })
     }
     const requestUpdate = () => { if (!frame) frame = requestAnimationFrame(update) }
     update()
     window.addEventListener('scroll', requestUpdate, { passive: true })
     window.addEventListener('resize', requestUpdate)
-    reduceMotion.addEventListener('change', requestUpdate)
     return () => {
       window.removeEventListener('scroll', requestUpdate)
       window.removeEventListener('resize', requestUpdate)
-      reduceMotion.removeEventListener('change', requestUpdate)
       if (frame) cancelAnimationFrame(frame)
     }
   }, [])
@@ -136,15 +124,20 @@ function ContactLinks({ compact = false }: { compact?: boolean }) {
   return <div className={`connect-links ${compact ? 'connect-links--compact' : ''}`}>{contactLinks.map(([label, href]) => <a key={label} className="pressable" href={href} target={href.startsWith('mailto:') ? undefined : '_blank'} rel={href.startsWith('mailto:') ? undefined : 'noreferrer'}>{label}<Arrow diagonal /></a>)}</div>
 }
 
-function ContactGlyph({ label }: { label: string }) {
+function ContactGlyph({ label, darkSurface = false }: { label: string; darkSurface?: boolean }) {
   if (label === 'LinkedIn') return <Linkedin className="h-6 w-6" aria-hidden="true" />
-  if (label === 'GitHub') return <Github variant="dark" className="h-6 w-6" aria-hidden="true" />
+  if (label === 'GitHub') return <Github variant={darkSurface ? 'dark' : 'light'} className="h-6 w-6" aria-hidden="true" />
   if (label === 'Gmail') return <Gmail2026 className="h-6 w-6" aria-hidden="true" />
   return <XFormerlyTwitter className="h-6 w-6" aria-hidden="true" />
 }
 
-function HeaderContactLinks() {
-  return <nav className="header-connect" aria-label="Social links">{contactLinks.map(([label, href]) => <a key={label} className="header-social pressable" href={href} target={href.startsWith('mailto:') ? undefined : '_blank'} rel={href.startsWith('mailto:') ? undefined : 'noreferrer'} aria-label={`Open ${label}`} title={label}><ContactGlyph label={label} /></a>)}</nav>
+function HeaderContactLinks({ darkSurface = false }: { darkSurface?: boolean }) {
+  return <nav className="header-connect" aria-label="Social links">{contactLinks.map(([label, href]) => <a key={label} className="header-social pressable" href={href} target={href.startsWith('mailto:') ? undefined : '_blank'} rel={href.startsWith('mailto:') ? undefined : 'noreferrer'} aria-label={`Open ${label}`} title={label}><ContactGlyph label={label} darkSurface={darkSurface} /></a>)}</nav>
+}
+
+function DockGlyph({ id }: { id: string }) {
+  const path = id === 'top' ? 'M3 10 10 3l7 7v7H6v-7m3 7v-5h2v5' : id === 'now' ? 'M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm0 3v4l3 2' : id === 'projects' ? 'M3 3h5v5H3V3Zm9 0h5v5h-5V3ZM3 12h5v5H3v-5Zm9 0h5v5h-5v-5Z' : 'M3 5h14v10H3V5Zm1 1 6 5 6-5'
+  return <svg className="dock-glyph" viewBox="0 0 20 20" aria-hidden="true" fill="none"><path d={path} stroke="currentColor" strokeWidth="1.45" strokeLinecap="round" strokeLinejoin="round" /></svg>
 }
 
 function HeroPortrait() {
@@ -157,31 +150,25 @@ function HeroPortrait() {
 }
 
 function Header({ active }: { active: string }) {
-  return <><a href="#main" className="skip-link">Skip to content</a><header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5"><div className="glass mx-auto flex h-14 max-w-[1440px] items-center justify-between rounded-2xl px-3 pl-4 sm:px-5"><a href="#top" className="brand-name pressable" aria-label="Allen Shibu, back to top">Allen Shibu</a><nav className="hidden items-center gap-1 md:flex" aria-label="Primary navigation">{navItems.map(([id, label]) => <a key={id} href={`#${id}`} className="nav-link" aria-current={active === id ? 'location' : undefined}>{label}</a>)}</nav><HeaderContactLinks /></div></header></>
-}
-
-function ProgressRail({ active }: { active: string }) {
-  return <nav className={`progress-rail ${active === 'projects' ? 'progress-rail--light' : ''}`} aria-label="Personal trajectory"><div className="progress-line"><span /></div><a href="#top" aria-label="Start" aria-current={active === 'top' ? 'location' : undefined}><span className="progress-dot" /><span className="progress-label">Start</span></a>{navItems.map(([id, label]) => <a key={id} href={`#${id}`} aria-label={label} aria-current={active === id ? 'location' : undefined}><span className="progress-dot" /><span className="progress-label">{id === 'now' ? 'NOW / 2026' : label}</span></a>)}</nav>
+  return <><a href="#main" className="skip-link">Skip to content</a><header className="site-header site-header--docked fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5"><div className="site-header-shell glass mx-auto flex h-14 max-w-[1440px] items-center justify-between rounded-2xl px-3 pl-4 sm:px-5"><nav className="primary-nav hidden items-center gap-1 md:flex" aria-label="Primary navigation"><a href="#top" className="nav-link dock-home" aria-current={active === 'top' ? 'location' : undefined} aria-label="Home" title="Home"><DockGlyph id="top" /><span className="nav-label">Home</span></a>{navItems.map(([id, label]) => <a key={id} href={`#${id}`} className="nav-link" aria-current={active === id ? 'location' : undefined} aria-label={label} title={label}><DockGlyph id={id} /><span className="nav-label">{label}</span></a>)}</nav><HeaderContactLinks darkSurface /></div></header></>
 }
 
 function Hero() {
-  return <section id="top" data-scroll-section className="hero-scroll"><div className="hero-sticky"><KineticGrid className="hero-grid" globalColor="monochrome"><HeroPortrait /><div className="relative z-10 mx-auto flex h-full max-w-[1440px] items-end px-5 pb-16 pt-28 sm:px-8 sm:pb-20 lg:items-center lg:px-16"><div className="max-w-[1050px]"><p className="kicker hero-enter">Allen Shibu · Kerala, India</p><h1 className="hero-title hero-enter">I build technology for <span>problems that matter.</span></h1><p className="hero-position hero-enter">Product builder · Co-founder, Axter Labs · AWS Student Builders Group Leader.</p><p className="hero-copy hero-enter">Selected to lead Kerala’s third AWS student community. Second-year computer science student at GECT, working toward remote sensing and high-trust engineering.</p></div></div><div className="hero-index" aria-hidden="true"><span>TRAJECTORY</span><b>01</b></div></KineticGrid></div></section>
+  return <section id="top" data-scroll-section className="hero-scroll"><div className="hero-sticky"><KineticGrid className="hero-grid" globalColor="monochrome"><HeroPortrait /><div className="relative z-10 mx-auto flex h-full max-w-[1440px] items-end px-5 pb-16 pt-28 sm:px-8 sm:pb-20 lg:items-center lg:px-16"><div className="max-w-[1050px]"><h1 className="hero-title hero-enter">Hi, I&apos;m<br /> <span>Allen Shibu</span></h1><p className="hero-position hero-enter">Product builder · Co-founder, Astrelon Labs · AWS Student Builders Group Leader.</p></div></div></KineticGrid></div></section>
 }
 
 function RightNow() {
-  return <section id="now" data-scroll-section data-observe className="now-scroll"><div className="now-sticky"><div className="now-heading"><p className="kicker">Right now</p><h2>Where the work is <em>pointing.</em></h2></div><div className="now-marker" aria-hidden="true"><span>NOW</span><b>2026</b></div><ol className="role-list">{roles.map(([title, copy], index) => <li key={title} style={{ '--role-index': index } as React.CSSProperties}><span>0{index + 1}</span><div><h3>{title}</h3><p>{copy}</p></div></li>)}</ol></div></section>
-}
-
-function Work() {
-  return <section id="work" data-observe className="work-section"><div className="work-intro reveal-in"><p className="kicker">What I do</p><h2 className="section-display">Four disciplines.<br /><em>One builder.</em></h2><p>Ideas matter when they survive the distance from first sketch to a dependable system.</p></div><div className="capability-features">{capabilities.map(([title, copy, proof, tags], index) => <article key={title as string} className="capability-feature reveal-in"><div className="feature-visual" aria-hidden="true"><span>0{index + 1}</span><b className="feature-step"><span>{capabilitySteps[index][0]}</span><Arrow /><span>{capabilitySteps[index][1]}</span></b></div><div className="feature-copy"><p className="kicker">Feature — 0{index + 1}{index === 3 ? ' · What’s next' : ''}</p><h3>{title as string}</h3><p>{copy as string}</p><div className="feature-tags">{(tags as string[]).map((tag) => <span key={tag}>{tag}</span>)}</div><small>{index === 3 ? `Trajectory — ${proof as string}` : `Proof — ${proof as string}`}</small></div></article>)}</div></section>
+  return <section id="now" className="now-scroll"><div className="now-sticky"><div className="now-heading"><h2>So, What&apos;s <em>Cooking?</em></h2></div><ol className="role-list">{roles.map(([title, copy], index) => <li key={title}><span>0{index + 1}</span><div><h3>{title}</h3><p>{copy}</p></div></li>)}</ol></div></section>
 }
 
 function TechStack() {
-  return <section data-observe className="tech-stack-section"><div className="tech-stack-inner reveal-in"><p className="kicker">Tech stack &amp; ecosystem</p><ul aria-label="Technologies I use">{techStack.map(([name, icon]) => <li key={name}>{icon}<span>{name}</span></li>)}</ul><small>Icons by <a href="https://thesvg.org/" target="_blank" rel="noreferrer">theSVG</a></small></div></section>
+  return <section data-observe className="tech-stack-section"><div className="tech-stack-inner reveal-in"><h2 className="tech-stack-title">Tech stack &amp; ecosystem</h2><ul aria-label="Technologies I use">{techStack.map(([name, icon]) => <li key={name}>{icon}<span>{name}</span></li>)}</ul><small>Icons by <a href="https://thesvg.org/" target="_blank" rel="noreferrer">theSVG</a></small></div></section>
 }
 
 function Projects() {
-  return <section id="projects" data-scroll-section data-observe className="project-scroll"><div className="project-sticky"><div className="project-track" data-horizontal-track><div className="project-lead"><p className="kicker">Selected builds</p><h2>One person.<br />Four directions.</h2><p>Real products, constrained users, working backends. Scroll to walk the index.</p></div>{projects.map((project, index) => <article className="project-card" key={project.name}><div className="project-number">0{index + 1}</div><p className="kicker">{project.kind}</p><h3>{project.name}</h3><p className="project-copy">{project.copy}</p>{'image' in project && <img className="project-image" src={project.image} alt={`${project.name} product interface`} decoding="async" />}<div className="project-footer"><span>{project.stack}</span><a className="round-link pressable" href={project.href} target="_blank" rel="noreferrer" aria-label={`${project.action}: ${project.name}`}><Arrow diagonal /></a></div></article>)}<div className="project-outro"><p>The common thread</p><h3>I stay with the problem until it becomes usable.</h3></div></div></div></section>
+  const [selected, setSelected] = useState(0)
+  const project = projects[selected]
+  return <section id="projects" className="project-section"><div className="project-showcase"><header className="project-heading"><h2>Products I shipped</h2><p>Real products, constrained users, working backends.</p></header><div className="project-tabs" role="group" aria-label="Select a project">{projects.map((item, index) => <button key={item.name} type="button" aria-pressed={selected === index} onClick={() => setSelected(index)}><span>0{index + 1}</span>{item.name}</button>)}</div><article className="project-panel" aria-live="polite"><div className="project-visual"><img src={project.image} alt={`${project.name} product interface`} decoding="async" /></div><div className="project-details"><p className="project-eyebrow">Project 0{selected + 1}</p><h3>{project.name}</h3><p className="project-copy">{project.copy}</p><ul className="project-stack" aria-label={`${project.name} technology stack`}>{project.stack.split(' · ').map((item) => <li key={item}>{item}</li>)}</ul><a className="project-action pressable" href={project.href} target="_blank" rel="noreferrer">{project.action}<Arrow diagonal /></a></div></article></div></section>
 }
 
 function Hackathons() {
@@ -189,7 +176,6 @@ function Hackathons() {
     <section id="hackathons" data-observe className="hackathons-section">
       <div className="hackathons-inner">
         <header className="hackathons-header reveal-in">
-          <div className="hackathons-label"><span>Hackathons</span></div>
           <h2>I like building things</h2>
           <p>Hackathons I have participated in so far—short, focused sprints where ideas have to become something real.</p>
         </header>
@@ -207,26 +193,27 @@ function Hackathons() {
 }
 
 function Credibility() {
-  return <section data-observe className="credibility-section"><div className="mx-auto max-w-[1440px] px-5 py-28 sm:px-8 lg:px-16 lg:py-40"><div className="credibility-intro reveal-in"><p className="kicker">Signals, not claims</p><h2 className="section-display">Momentum with<br /><em>receipts.</em></h2></div><ol className="credibility-list">{credibility.map(([title, copy], index) => <li key={title} className="reveal-in"><span>0{index + 1}</span><h3>{title}</h3><p>{copy}</p></li>)}</ol></div></section>
+  return <section data-observe className="credibility-section"><div className="mx-auto max-w-[1440px] px-5 py-28 sm:px-8 lg:px-16 lg:py-40"><div className="credibility-intro reveal-in"><h2 className="section-display">Momentum with<br /><em>receipts.</em></h2></div><ol className="credibility-list">{credibility.map(([title, copy, href], index) => <li key={title} className="reveal-in"><span>0{index + 1}</span><h3>{href ? <a href={href} target="_blank" rel="noreferrer">{title}<Arrow diagonal /></a> : title}</h3><p>{copy}</p></li>)}</ol></div></section>
 }
 
 function GithubActivity() {
-  return <section className="github-activity"><div className="github-activity-inner"><div className="github-activity-copy"><p className="kicker">Building, most days.</p><h2 className="section-display">A record of<br /><em>building.</em></h2><p>Recent building activity, translated into a small playable surface.</p></div><GithubCalendar username="Allen-Shibu" cellSize={16} cellGap={4} className="github-calendar-feature" /></div></section>
+  return <section className="github-activity"><div className="github-activity-inner"><div className="github-activity-copy"><h2 className="section-display">A record of<br /><em>building.</em></h2><p>Recent building activity, translated into a small playable surface.</p></div><div className="github-calendar-build"><GithubCalendar username="Allen-Shibu" cellSize={16} cellGap={4} className="github-calendar-feature" /></div></div></section>
 }
 
 function Journal() {
-  return <section id="journal" data-scroll-section className="journal-scroll"><div className="journal-sticky"><header className="journal-heading"><p className="kicker">Beyond the commits</p><h2>Where I&apos;ve Been</h2><p>The People, The Rooms</p></header><div id="journal-grid" className="journal-grid">{journalItems.map(([src, alt], index) => <figure key={src} className={`journal-card journal-card--${index + 1}`}><img src={src} alt={alt} loading="lazy" decoding="async" />{journalItems.length > 5 && index === 2 && <figcaption>View gallery <Arrow diagonal /></figcaption>}</figure>)}</div></div></section>
+  const [expanded, setExpanded] = useState(false)
+  return <section id="journal" data-scroll-section className="journal-scroll"><div className="journal-sticky"><header className="journal-heading"><h2>Where I&apos;ve Been</h2><p>The People, The Rooms</p></header><div id="journal-grid" className={`journal-grid${expanded ? ' journal-grid--expanded' : ''}`}>{journalItems.map(([src, alt], index) => <figure key={src} className={`journal-card journal-card--${index + 1}${index > 4 ? ' journal-card--extra' : ''}`}><img src={src} alt={alt} loading="lazy" decoding="async" /></figure>)}</div><button type="button" className="journal-view-toggle" aria-controls="journal-grid" aria-expanded={expanded} onClick={() => setExpanded((open) => !open)}>{expanded ? 'Close gallery' : 'View gallery'} <Arrow diagonal /></button></div></section>
 }
 
 function Contact() {
-  return <section id="contact" data-scroll-section data-observe className="contact-scroll"><div className="contact-sticky"><div className="closing-kinetic" aria-hidden="true"><span>THINK</span><span>BUILD</span><span>SHIP</span></div><div className="relative z-10 mx-auto flex h-full max-w-[1440px] flex-col justify-between px-5 pb-8 pt-28 sm:px-8 lg:px-16"><p className="kicker">What comes next</p><div className="max-w-5xl"><h2>To infinity<br /><span>and beyond!</span></h2><ContactLinks /></div><footer className="site-footer"><div><span>Allen Shibu · Kerala, India</span><span>Co-founder, Axter Labs · 2026</span></div><nav className="footer-connect" aria-label="Connect with me"><span>Connect with me</span><ContactLinks compact /></nav></footer></div></div></section>
+  return <section id="contact" data-scroll-section data-observe className="contact-scroll"><div className="contact-sticky"><div className="closing-kinetic" aria-hidden="true"><span>THINK</span><span>BUILD</span><span>SHIP</span></div><div className="relative z-10 mx-auto flex h-full max-w-[1440px] flex-col justify-between px-5 pb-8 pt-28 sm:px-8 lg:px-16"><div className="my-auto max-w-5xl"><h2>To infinity<br /><span>and beyond!</span></h2></div><footer className="site-footer"><div><span>Allen Shibu · Kerala, India</span><span>Co-founder, Astrelon Labs · 2026</span></div><nav className="footer-connect" aria-label="Connect with me"><span>Connect with me</span><ContactLinks compact /></nav></footer></div></div></section>
 }
 
 export default function App() {
   const [active, setActive] = useState('top')
   useScrollCraft()
   useEffect(() => {
-    const sections = [...document.querySelectorAll<HTMLElement>('#top, #now, #work, #projects, #contact')]
+    const sections = [...document.querySelectorAll<HTMLElement>('#top, #now, #projects, #contact')]
     const update = () => {
       let current = 'top'
       sections.forEach((section) => { if (section.getBoundingClientRect().top <= innerHeight / 2) current = section.id })
@@ -241,5 +228,5 @@ export default function App() {
     document.querySelectorAll('.reveal-in').forEach((element) => observer.observe(element))
     return () => observer.disconnect()
   }, [])
-  return <><Header active={active} /><ProgressRail active={active} /><main id="main"><Hero /><RightNow /><Work /><TechStack /><Projects /><Hackathons /><Credibility /><GithubActivity /><Journal /><Contact /></main></>
+  return <><Header active={active} /><main id="main"><Hero /><RightNow /><TechStack /><Projects /><Hackathons /><Credibility /><GithubActivity /><Journal /><Contact /></main></>
 }

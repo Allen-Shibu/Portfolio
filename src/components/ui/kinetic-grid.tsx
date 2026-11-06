@@ -8,7 +8,6 @@ const CELL_SIZE = 55
 const INFLUENCE_RADIUS = 260
 const MAX_WARP = 24
 const DOT_SPACING = 28
-const LERP_SPEED = 0.08
 const LINE_BASE = { r: 255, g: 255, b: 255, a: 0.13 }
 const NODE_BASE_RADIUS = 1.8
 const NODE_ACTIVE_RADIUS = 3.2
@@ -30,9 +29,7 @@ export default function KineticGrid({ children, className, globalColor = 'defaul
   const rootRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mouseRef = useRef<Point>({ x: -9999, y: -9999 })
-  const targetMouseRef = useRef<Point>({ x: -9999, y: -9999 })
   const ripplesRef = useRef<Ripple[]>([])
-  const rafRef = useRef(0)
   const sizeRef = useRef({ w: 0, h: 0 })
 
   const getWarpedPoint = useCallback((gx: number, gy: number, col: number, row: number, mouse: Point, ripples: Ripple[], cols: number, rows: number) => {
@@ -80,13 +77,13 @@ export default function KineticGrid({ children, className, globalColor = 'defaul
     const mouse = mouseRef.current
     const ripples = ripplesRef.current
     const theme = globalColor === 'monochrome'
-      ? { bg: '#07110e', lineActive: { r: 255, g: 255, b: 255, a: .9 }, nodeActive: { r: 255, g: 255, b: 255, a: 1 }, glow: '255,255,255', ripple: '255,255,255' }
-      : { bg: '#161618', lineActive: { r: 74, g: 158, b: 255, a: .9 }, nodeActive: { r: 74, g: 158, b: 255, a: 1 }, glow: '74,158,255', ripple: '100,180,255' }
+      ? { bg: '#ffffff', lineBase: { r: 0, g: 0, b: 0, a: .12 }, lineActive: { r: 0, g: 0, b: 0, a: .9 }, nodeBase: { r: 0, g: 0, b: 0, a: .2 }, nodeActive: { r: 0, g: 0, b: 0, a: 1 }, glow: '0,0,0', ripple: '0,0,0', dots: 'rgba(0,0,0,0.06)' }
+      : { bg: '#161618', lineBase: LINE_BASE, lineActive: { r: 74, g: 158, b: 255, a: .9 }, nodeBase: { r: 255, g: 255, b: 255, a: .2 }, nodeActive: { r: 74, g: 158, b: 255, a: 1 }, glow: '74,158,255', ripple: '100,180,255', dots: 'rgba(255,255,255,0.05)' }
 
     ctx.clearRect(0, 0, W, H)
     ctx.fillStyle = theme.bg
     ctx.fillRect(0, 0, W, H)
-    ctx.fillStyle = 'rgba(255,255,255,0.05)'
+    ctx.fillStyle = theme.dots
     for (let x = DOT_SPACING / 2; x < W; x += DOT_SPACING) for (let y = DOT_SPACING / 2; y < H; y += DOT_SPACING) {
       ctx.beginPath(); ctx.arc(x, y, .7, 0, Math.PI * 2); ctx.fill()
     }
@@ -120,7 +117,7 @@ export default function KineticGrid({ children, className, globalColor = 'defaul
       const average = (proximityA + proximityB) / 2
       const t = average * average * (3 - 2 * average)
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y)
-      ctx.strokeStyle = lerpColor(LINE_BASE, theme.lineActive, t)
+      ctx.strokeStyle = lerpColor(theme.lineBase, theme.lineActive, t)
       ctx.lineWidth = lerpN(.8, 1.5, t)
       ctx.stroke()
     }
@@ -142,7 +139,7 @@ export default function KineticGrid({ children, className, globalColor = 'defaul
         ctx.beginPath(); ctx.arc(point.x, point.y, glowRadius, 0, Math.PI * 2); ctx.fillStyle = gradient; ctx.fill()
       }
       ctx.beginPath(); ctx.arc(point.x, point.y, radius, 0, Math.PI * 2)
-      ctx.fillStyle = lerpColor({ r: 255, g: 255, b: 255, a: .2 }, theme.nodeActive, t)
+      ctx.fillStyle = lerpColor(theme.nodeBase, theme.nodeActive, t)
       ctx.fill()
     }
 
@@ -153,15 +150,6 @@ export default function KineticGrid({ children, className, globalColor = 'defaul
     }
   }, [getWarpedPoint, globalColor])
 
-  const animate = useCallback((now: number) => {
-    const mouse = mouseRef.current
-    const target = targetMouseRef.current
-    mouse.x = lerpN(mouse.x, target.x, LERP_SPEED)
-    mouse.y = lerpN(mouse.y, target.y, LERP_SPEED)
-    draw(now)
-    rafRef.current = requestAnimationFrame(animate)
-  }, [draw])
-
   useEffect(() => {
     const root = rootRef.current
     const canvas = canvasRef.current
@@ -171,43 +159,24 @@ export default function KineticGrid({ children, className, globalColor = 'defaul
       canvas.width = root.clientWidth
       canvas.height = root.clientHeight
       sizeRef.current = { w: canvas.width, h: canvas.height }
-    }
-    const setPointer = (event: MouseEvent) => {
-      const rect = root.getBoundingClientRect()
-      targetMouseRef.current = event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom
-        ? { x: event.clientX - rect.left, y: event.clientY - rect.top }
-        : { x: -9999, y: -9999 }
-    }
-    const addRipple = (event: MouseEvent) => {
-      const rect = root.getBoundingClientRect()
-      if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) return
-      ripplesRef.current.push({ x: event.clientX - rect.left, y: event.clientY - rect.top, radius: 0, opacity: 1, born: performance.now() })
+      draw(performance.now())
     }
 
     setSize()
     const resizeObserver = new ResizeObserver(setSize)
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const visibilityObserver = new IntersectionObserver(([entry]) => {
-      cancelAnimationFrame(rafRef.current)
-      if (!entry.isIntersecting) return
-      if (reduceMotion) draw(performance.now())
-      else rafRef.current = requestAnimationFrame(animate)
+      if (entry.isIntersecting) draw(performance.now())
     })
     resizeObserver.observe(root)
     visibilityObserver.observe(root)
-    window.addEventListener('mousemove', setPointer)
-    window.addEventListener('click', addRipple)
 
     return () => {
       resizeObserver.disconnect()
       visibilityObserver.disconnect()
-      window.removeEventListener('mousemove', setPointer)
-      window.removeEventListener('click', addRipple)
-      cancelAnimationFrame(rafRef.current)
     }
-  }, [animate, draw])
+  }, [draw])
 
-  return <div ref={rootRef} className={cn('relative min-h-screen w-full overflow-hidden', globalColor === 'monochrome' ? 'bg-[#07110e]' : 'bg-[#161618]', className)}>
+  return <div ref={rootRef} className={cn('relative min-h-screen w-full overflow-hidden', globalColor === 'monochrome' ? 'bg-white' : 'bg-[#161618]', className)}>
     <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 z-0 h-full w-full" aria-hidden="true" />
     <div className="relative z-10 h-full w-full">{children}</div>
   </div>
