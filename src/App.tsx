@@ -32,7 +32,7 @@ const contactLinks = [
   ['Gmail', 'mailto:allenshibukuriakose@gmail.com'],
 ] as const
 const techStack = [
-  ['Go', <GoIcon />],
+  ['Go', <GoIcon variant="light" />],
   ['Python', <Python />],
   ['JavaScript', <Javascript />],
   ['TypeScript', <Typescript />],
@@ -41,7 +41,7 @@ const techStack = [
   ['React', <ReactLogo />],
   ['PostgreSQL', <Postgresql />],
   ['Supabase', <Supabase />],
-  ['AWS', <Aws variant="icon" />],
+  ['AWS', <Aws className="aws-logo" />],
   ['Vercel', <Vercel variant="light" />],
   ['Render', <Render />],
   ['Linux', <Linux />],
@@ -53,7 +53,7 @@ const techStack = [
   ['Blender', <Blender />],
 ] as const
 const projects = [
-  { name: 'Haritha Sethu', copy: 'An Astrelon Labs product turning Earth observation data into local environmental intelligence for Kerala gram panchayats.', stack: 'Earth Engine · PostGIS · Remote sensing · AI', href: 'https://github.com/Allen-Shibu/HarithaSethu', action: 'View repository', image: '/harithasethu.jpeg' },
+  { name: 'Haritha Sethu', copy: 'An Astrelon Labs product turning Earth observation data into local environmental intelligence for Kerala gram panchayats.', stack: 'Earth Engine · PostGIS · Remote sensing · AI', href: 'https://harithasethu.astrelonlabs.space/', action: 'Check Out', image: '/harithasethu.png' },
   { name: 'OpenOrbit', copy: 'Event discovery and registration across campuses, with a no-code form builder and payments. Shipped to 100+ active users.', stack: 'React 19 · Go/Gin · Neon · Razorpay', href: 'https://openorbit.app/', action: 'Open product', image: '/openorbit.jpeg' },
   { name: 'CLA-RA', copy: 'Drop a company name. An agentic research loop checks whether the business behind it holds up.', stack: 'Go/Gin · Serper · OpenRouter', href: 'https://cla-ra.vercel.app/', action: 'Open product', image: '/CLA-RA.png' },
 ]

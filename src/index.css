@@ -270,6 +270,7 @@ button:focus-visible {
 .tech-stack-inner ul { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4.5rem 2rem; margin: 5rem 0 4rem; padding: 0; list-style: none; }
 .tech-stack-inner li { display: flex; min-width: 0; align-items: center; gap: .9rem; color: #8e9791; font-size: 1rem; font-weight: 700; }
 .tech-stack-inner li svg { width: 2.25rem; height: 2.25rem; flex: none; }
+.tech-stack-inner li svg.aws-logo { padding: .25rem; color: #000; background: #fff; border-radius: .25rem; }
 .tech-stack-inner > small { display: block; color: #536159; font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; }
 .tech-stack-inner > small a { color: #849188; text-decoration: underline; text-underline-offset: .2rem; }
 
@@ -288,9 +289,9 @@ button:focus-visible {
 .project-panel { display: grid; min-height: 38rem; grid-template-columns: minmax(0, 1.9fr) minmax(19rem, .9fr); border: 1px solid rgba(0,0,0,.2); background: #fff; }
 .project-visual { display: grid; min-width: 0; overflow: hidden; place-items: center; border-right: 1px solid rgba(0,0,0,.2); background: #e8e8e8; }
 .project-visual img { width: 100%; height: 100%; object-fit: cover; }
-.project-details { display: flex; min-width: 0; flex-direction: column; align-items: start; padding: clamp(2rem, 4vw, 4rem); }
+.project-details { display: flex; min-width: 0; flex-direction: column; align-items: start; padding: clamp(2rem, 3vw, 3rem); }
 .project-eyebrow { margin: 0 0 1rem; color: #666; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; }
-.project-details h3 { margin: 0 0 1.5rem; font-size: clamp(2.25rem, 3.4vw, 4rem); font-weight: 620; letter-spacing: -.035em; line-height: .9; white-space: nowrap; }
+.project-details h3 { max-width: 100%; margin: 0 0 1.5rem; font-size: clamp(2.25rem, 3vw, 3.25rem); font-weight: 620; letter-spacing: -.035em; line-height: .9; }
 .project-copy { margin: 0; color: #555; line-height: 1.6; }
 .project-stack { display: flex; margin: 1.5rem 0 2rem; padding: 0; flex-wrap: wrap; gap: .45rem; list-style: none; }
 .project-stack li { border: 1px solid rgba(0,0,0,.2); border-radius: 999px; padding: .38rem .65rem; color: #555; font-size: .68rem; }
