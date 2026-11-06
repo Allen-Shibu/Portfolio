@@ -1,5 +1,28 @@
 import { expect, test } from 'playwright/test'
 
+test('gallery modal browses the full image set', async ({ browser }) => {
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } })
+  await page.goto('/', { waitUntil: 'networkidle' })
+  const viewGallery = page.getByRole('button', { name: 'View Gallery' })
+  await expect(viewGallery).toHaveCSS('opacity', '0')
+  await page.evaluate(() => {
+    const section = document.querySelector<HTMLElement>('#gallery')!
+    window.scrollTo(0, section.offsetTop + section.offsetHeight - innerHeight)
+  })
+  await expect(viewGallery).toBeVisible()
+  await viewGallery.click()
+  const gallery = page.getByRole('dialog', { name: 'Gallery' })
+  await expect(gallery).toBeVisible()
+  await expect(gallery.getByRole('img')).toHaveCount(1)
+  await gallery.getByRole('button', { name: 'Previous' }).click()
+  await expect(gallery.getByRole('img')).toHaveAttribute('src', '/gallery/kph_with_thomson.jpeg')
+  await page.keyboard.press('ArrowRight')
+  await expect(gallery.getByRole('img')).toHaveAttribute('src', '/gallery/codex.jpeg')
+  await gallery.getByRole('button', { name: 'Close' }).click()
+  await expect(gallery).not.toBeVisible()
+  await page.close()
+})
+
 test('portfolio stays readable and operable across layouts', async ({ browser }) => {
   test.setTimeout(60000)
   for (const options of [
@@ -78,9 +101,9 @@ test('portfolio stays readable and operable across layouts', async ({ browser })
     await expect(page.getByRole('heading', { name: "Where I've Been" })).toBeAttached()
     await expect(page.getByText('The People, The Rooms', { exact: true })).toBeAttached()
     await expect(page.locator('#gallery .journal-card')).toHaveCount(5)
-    await expect(page.locator('#gallery img')).toHaveCount(5)
+    await expect(page.locator('#gallery .journal-grid img')).toHaveCount(5)
     await expect(page.locator('#gallery img[src*="unsplash"]')).toHaveCount(0)
-    await expect(page.locator('.journal-view-toggle')).toHaveCount(0)
+    await expect(page.getByRole('button', { name: 'View Gallery' })).toBeAttached()
     const gameToggle = page.getByRole('button', { name: 'Toggle retro shooter game' })
     await expect(gameToggle).toBeAttached()
     await gameToggle.click()

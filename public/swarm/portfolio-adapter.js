@@ -63,8 +63,8 @@ window.syncPortfolioSwarm = (engine) => {
       }
       binding.generated.hidden = !element.vis
       binding.generated.textContent = element.shown
-      binding.generated.style.left = `${bounds.left}px`
-      binding.generated.style.top = `${y}px`
+      binding.generated.style.left = `${element.x + element.dx}px`
+      binding.generated.style.top = `${element.y + element.dy}px`
       binding.generated.style.width = `${bounds.width}px`
       binding.generated.classList.toggle('is-editing', Boolean(element.editing && !element.selAll))
       binding.generated.classList.toggle('is-selected', Boolean(element.selAll))

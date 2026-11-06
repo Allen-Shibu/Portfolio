@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import Github from '@thesvg/react/github'
 import Gmail2026 from '@thesvg/react/gmail-2026'
 import Linkedin from '@thesvg/react/linkedin'
+import Meta from '@thesvg/react/meta'
 import XFormerlyTwitter from '@thesvg/react/x-formerly-twitter'
 import Aws from '@thesvg/react/aws'
 import Blender from '@thesvg/react/blender'
@@ -71,6 +72,7 @@ const credibility = [
   ['Kerala Startup Mission', 'Idea Box — Expert Evaluation. Received positive expert feedback through KSUM’s Idea Box Portal, with the idea recognized as promising and recommended for further development towards a Minimum Viable Product (MVP).'],
 ]
 const hackathons = [
+  ['META', 'Meta Global AI Developer Hackathon', 'October 26 – November 5, 2026 · Online', 'A 10-day global build sprint using Meta Model API, Muse Code, and open-weight models, with technical workshops from Meta Superintelligence Labs.', undefined, 'https://developers.meta.com/blog/meta-connect-recap/'],
   ['CN', 'Codex Nightline', 'July 18, 2026 · Kochi, Kerala', 'World’s first AI hackathon inside a moving Kochi Metro train. Selected as 1 of 100 builders from 1,200+ registrations for a solo overnight build sprint.', '/hackathon/codex-icon.webp', 'https://www.codexnightline.in/#builder-selection'],
   ['S4P', 'Solve4Public Lab 1.0', 'Late July – August 1, 2026 · Chakkittapara, Kozhikode, Kerala', 'A 3-day fully-funded program by TinkerHub & The Ignite Foundation. Co-built Haritha Sethu, a satellite-based environmental monitoring platform for Panchayats, working directly with local officials.'],
   ['L:67', 'Localhost:6767 (Supermemory Hackathon)', 'July 9–13, 2026 · Online', 'Supermemory’s first-ever hackathon. Built ACPIA, a CLI AI agent that turns digital evidence into cited, human-reviewable leads for child-protection cases.', '/hackathon/supermemory.jpeg'],
@@ -82,6 +84,12 @@ const journalItems = [
   ['/gallery/codex2.jpeg', 'Building during Codex Nightline'],
   ['/gallery/hs.jpeg', 'The Haritha Sethu team'],
   ['/gallery/hs1.jpeg', 'Haritha Sethu field work'],
+  ['/gallery/aws.jpeg', 'Allen speaking at the AWS Student Builder Group kickoff'],
+  ['/gallery/aws_group.jpeg', 'AWS Student Builder Group kickoff attendees'],
+  ['/gallery/kph.jpeg', 'Allen at KPH Hackathon 2026'],
+  ['/gallery/kph_!.jpeg', 'Team selfie at KPH Hackathon 2026'],
+  ['/gallery/kph_group.jpeg', 'Builders at KPH Hackathon 2026'],
+  ['/gallery/kph_with_thomson.jpeg', 'Allen and Thomson at KPH Hackathon 2026'],
 ] as const
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value))
@@ -182,7 +190,7 @@ function Hackathons() {
         <ol className="hackathon-list">
           {hackathons.map(([mark, name, date, copy, image, href]) => (
             <li key={name} className="reveal-in">
-              <span className="hackathon-mark" aria-hidden="true">{image ? <img src={image} alt="" /> : mark}</span>
+              <span className="hackathon-mark" aria-hidden="true">{mark === 'META' ? <Meta className="h-5 w-7" /> : image ? <img src={image} alt="" /> : mark}</span>
               <div><small>{date}</small><h3>{href ? <a href={href} target="_blank" rel="noreferrer">{name}<Arrow diagonal /></a> : name}</h3><p>{copy}</p></div>
             </li>
           ))}
@@ -201,7 +209,26 @@ function GithubActivity() {
 }
 
 function Journal() {
-  return <section id="gallery" data-scroll-section className="journal-scroll"><div className="journal-sticky"><header className="journal-heading"><h2>Where I&apos;ve Been</h2><p>The People, The Rooms</p></header><div className="journal-grid">{journalItems.map(([src, alt], index) => <figure key={src} className={`journal-card journal-card--${index + 1}`}><img src={src} alt={alt} loading="lazy" decoding="async" /></figure>)}</div></div></section>
+  const dialog = useRef<HTMLDialogElement>(null)
+  const [selected, setSelected] = useState(0)
+  const [src, alt] = journalItems[selected]
+  const move = (direction: number) => setSelected((current) => (current + direction + journalItems.length) % journalItems.length)
+
+  return <>
+    <section id="gallery" data-scroll-section className="journal-scroll">
+      <div className="journal-sticky">
+        <header className="journal-heading"><h2>Where I&apos;ve Been</h2><p>The People, The Rooms</p></header>
+        <div className="journal-grid">{journalItems.slice(0, 5).map(([image, description], index) => <figure key={image} className={`journal-card journal-card--${index + 1}`}><img src={image} alt={description} loading="lazy" decoding="async" />{index === 4 && <button type="button" className="journal-view-toggle pressable" onClick={() => { setSelected(0); dialog.current?.showModal() }}>View Gallery</button>}</figure>)}</div>
+      </div>
+    </section>
+    <dialog ref={dialog} className="gallery-dialog" aria-labelledby="gallery-dialog-title" onClick={(event) => { if (event.target === event.currentTarget) dialog.current?.close() }} onKeyDown={(event) => { if (event.key === 'ArrowLeft') move(-1); if (event.key === 'ArrowRight') move(1) }}>
+      <div className="gallery-dialog-shell">
+        <header><h2 id="gallery-dialog-title">Gallery</h2><button type="button" className="pressable" onClick={() => dialog.current?.close()}>Close</button></header>
+        <figure><img src={src} alt={alt} /></figure>
+        <nav aria-label="Gallery controls"><button type="button" className="pressable" onClick={() => move(-1)}>Previous</button><button type="button" className="pressable" onClick={() => move(1)}>Next</button></nav>
+      </div>
+    </dialog>
+  </>
 }
 
 function Contact() {
