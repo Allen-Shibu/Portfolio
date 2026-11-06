@@ -23,6 +23,48 @@ test('gallery modal browses the full image set', async ({ browser }) => {
   await page.close()
 })
 
+test('light mode is the default and dark mode can be toggled', async ({ browser }) => {
+  const page = await browser.newPage({ colorScheme: 'dark', reducedMotion: 'reduce' })
+  await page.goto('/', { waitUntil: 'networkidle' })
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
+  await expect(page.locator('.hero-grid')).toHaveCSS('background-color', 'rgb(255, 255, 255)')
+  await expect.poll(() => page.locator('#top canvas').evaluate((canvas: HTMLCanvasElement) => [...canvas.getContext('2d')!.getImageData(20, 20, 1, 1).data])).toEqual([255, 255, 255, 255])
+  await page.getByRole('button', { name: 'Switch to dark mode' }).click()
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(8, 10, 9)')
+  await expect(page.locator('.hero-grid')).toHaveCSS('background-color', 'rgb(8, 10, 9)')
+  await expect(page.locator('.site-header-shell')).toHaveCSS('background-color', 'rgba(255, 255, 255, 0.96)')
+  await expect.poll(() => page.locator('#top canvas').evaluate((canvas: HTMLCanvasElement) => [...canvas.getContext('2d')!.getImageData(20, 20, 1, 1).data])).toEqual([8, 10, 9, 255])
+  await expect(page.locator('.project-section')).toHaveCSS('color', 'rgb(238, 241, 238)')
+  await expect(page.locator('.project-panel')).toHaveCSS('background-color', 'rgb(17, 20, 17)')
+  for (const technology of ['Go', 'Vercel', 'Render']) {
+    await expect(page.getByRole('listitem').filter({ hasText: technology }).locator('path').first()).toHaveCSS('fill', 'rgb(165, 173, 167)')
+  }
+  await page.reload({ waitUntil: 'networkidle' })
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
+  await page.close()
+})
+
+test('shooter bullets stay visible in both themes', async ({ browser }) => {
+  for (const colorScheme of ['light', 'dark'] as const) {
+    const page = await browser.newPage({ colorScheme })
+    await page.goto('/', { waitUntil: 'networkidle' })
+    await page.getByRole('button', { name: 'Toggle retro shooter game' }).click()
+    const canvas = page.locator('.github-activity canvas')
+    await expect(canvas).toBeVisible()
+    await expect.poll(() => canvas.evaluate((element: HTMLCanvasElement) => {
+      const { data, height, width } = element.getContext('2d')!.getImageData(0, 0, element.width, element.height)
+      let bulletPixels = 0
+      for (let y = 0; y < height - 45; y++) for (let x = 0; x < width; x++) {
+        const offset = (y * width + x) * 4
+        if (data[offset] === 245 && data[offset + 1] === 245 && data[offset + 2] === 245 && data[offset + 3] === 255) bulletPixels++
+      }
+      return bulletPixels
+    }), { timeout: 3000 }).toBeGreaterThan(0)
+    await page.close()
+  }
+})
+
 test('portfolio stays readable and operable across layouts', async ({ browser }) => {
   test.setTimeout(60000)
   for (const options of [

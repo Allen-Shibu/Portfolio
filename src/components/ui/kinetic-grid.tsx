@@ -21,10 +21,11 @@ function lerpColor(base: typeof LINE_BASE, active: typeof LINE_BASE, t: number) 
   return `rgba(${r},${g},${b},${lerpN(base.a, active.a, t).toFixed(3)})`
 }
 
-export default function KineticGrid({ children, className, globalColor = 'default' }: {
+export default function KineticGrid({ children, className, globalColor = 'default', colorScheme = 'light' }: {
   children?: ReactNode
   className?: string
   globalColor?: 'default' | 'monochrome'
+  colorScheme?: 'light' | 'dark'
 }) {
   const rootRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -77,7 +78,9 @@ export default function KineticGrid({ children, className, globalColor = 'defaul
     const mouse = mouseRef.current
     const ripples = ripplesRef.current
     const theme = globalColor === 'monochrome'
-      ? { bg: '#ffffff', lineBase: { r: 0, g: 0, b: 0, a: .12 }, lineActive: { r: 0, g: 0, b: 0, a: .9 }, nodeBase: { r: 0, g: 0, b: 0, a: .2 }, nodeActive: { r: 0, g: 0, b: 0, a: 1 }, glow: '0,0,0', ripple: '0,0,0', dots: 'rgba(0,0,0,0.06)' }
+      ? colorScheme === 'dark'
+        ? { bg: '#080a09', lineBase: { r: 238, g: 241, b: 238, a: .12 }, lineActive: { r: 238, g: 241, b: 238, a: .9 }, nodeBase: { r: 238, g: 241, b: 238, a: .2 }, nodeActive: { r: 238, g: 241, b: 238, a: 1 }, glow: '238,241,238', ripple: '238,241,238', dots: 'rgba(238,241,238,0.05)' }
+        : { bg: '#ffffff', lineBase: { r: 0, g: 0, b: 0, a: .12 }, lineActive: { r: 0, g: 0, b: 0, a: .9 }, nodeBase: { r: 0, g: 0, b: 0, a: .2 }, nodeActive: { r: 0, g: 0, b: 0, a: 1 }, glow: '0,0,0', ripple: '0,0,0', dots: 'rgba(0,0,0,0.06)' }
       : { bg: '#161618', lineBase: LINE_BASE, lineActive: { r: 74, g: 158, b: 255, a: .9 }, nodeBase: { r: 255, g: 255, b: 255, a: .2 }, nodeActive: { r: 74, g: 158, b: 255, a: 1 }, glow: '74,158,255', ripple: '100,180,255', dots: 'rgba(255,255,255,0.05)' }
 
     ctx.clearRect(0, 0, W, H)
@@ -148,7 +151,7 @@ export default function KineticGrid({ children, className, globalColor = 'defaul
       ctx.strokeStyle = `rgba(${theme.ripple},${(ripple.opacity * .28).toFixed(3)})`
       ctx.lineWidth = 1.5; ctx.stroke()
     }
-  }, [getWarpedPoint, globalColor])
+  }, [colorScheme, getWarpedPoint, globalColor])
 
   useEffect(() => {
     const root = rootRef.current
@@ -176,7 +179,7 @@ export default function KineticGrid({ children, className, globalColor = 'defaul
     }
   }, [draw])
 
-  return <div ref={rootRef} className={cn('relative min-h-screen w-full overflow-hidden', globalColor === 'monochrome' ? 'bg-white' : 'bg-[#161618]', className)}>
+  return <div ref={rootRef} className={cn('relative min-h-screen w-full overflow-hidden', globalColor === 'monochrome' ? colorScheme === 'dark' ? 'bg-[#080a09]' : 'bg-white' : 'bg-[#161618]', className)}>
     <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 z-0 h-full w-full" aria-hidden="true" />
     <div className="relative z-10 h-full w-full">{children}</div>
   </div>

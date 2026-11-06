@@ -33,7 +33,7 @@ const contactLinks = [
   ['Gmail', 'mailto:allenshibukuriakose@gmail.com'],
 ] as const
 const techStack = [
-  ['Go', <GoIcon variant="light" />],
+  ['Go', <GoIcon variant="mono" />],
   ['Python', <Python />],
   ['JavaScript', <Javascript />],
   ['TypeScript', <Typescript />],
@@ -43,8 +43,8 @@ const techStack = [
   ['PostgreSQL', <Postgresql />],
   ['Supabase', <Supabase />],
   ['AWS', <Aws className="aws-logo" />],
-  ['Vercel', <Vercel variant="light" />],
-  ['Render', <Render />],
+  ['Vercel', <Vercel variant="mono" />],
+  ['Render', <Render variant="mono" />],
   ['Linux', <Linux />],
   ['Git', <Git />],
   ['GitHub', <Github variant="light" />],
@@ -91,6 +91,7 @@ const journalItems = [
   ['/gallery/kph_group.jpeg', 'Builders at KPH Hackathon 2026'],
   ['/gallery/kph_with_thomson.jpeg', 'Allen and Thomson at KPH Hackathon 2026'],
 ] as const
+type Theme = 'light' | 'dark'
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value))
 
@@ -157,12 +158,13 @@ function HeroPortrait() {
   )
 }
 
-function Header({ active }: { active: string }) {
-  return <><a href="#main" className="skip-link">Skip to content</a><header className="site-header site-header--docked fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5"><div className="site-header-shell glass mx-auto flex h-14 max-w-[1440px] items-center justify-between rounded-2xl px-3 pl-4 sm:px-5"><nav className="primary-nav hidden items-center gap-1 md:flex" aria-label="Primary navigation"><a href="#top" className="nav-link dock-home" aria-current={active === 'top' ? 'location' : undefined} aria-label="Home" data-tooltip="Home"><DockGlyph id="top" /><span className="nav-label">Home</span></a>{navItems.map(([id, label]) => <a key={id} href={`#${id}`} className="nav-link" aria-current={active === id ? 'location' : undefined} aria-label={label} data-tooltip={label}><DockGlyph id={id} /><span className="nav-label">{label}</span></a>)}</nav><HeaderContactLinks darkSurface /></div></header></>
+function Header({ active, theme, onToggleTheme }: { active: string; theme: Theme; onToggleTheme: () => void }) {
+  const nextTheme = theme === 'dark' ? 'light' : 'dark'
+  return <><a href="#main" className="skip-link">Skip to content</a><header className="site-header site-header--docked fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5"><div className="site-header-shell glass mx-auto flex h-14 max-w-[1440px] items-center justify-between rounded-2xl px-3 pl-4 sm:px-5"><nav className="primary-nav hidden items-center gap-1 md:flex" aria-label="Primary navigation"><a href="#top" className="nav-link dock-home" aria-current={active === 'top' ? 'location' : undefined} aria-label="Home" data-tooltip="Home"><DockGlyph id="top" /><span className="nav-label">Home</span></a>{navItems.map(([id, label]) => <a key={id} href={`#${id}`} className="nav-link" aria-current={active === id ? 'location' : undefined} aria-label={label} data-tooltip={label}><DockGlyph id={id} /><span className="nav-label">{label}</span></a>)}</nav><div className="header-actions"><button type="button" className="theme-toggle pressable" aria-label={`Switch to ${nextTheme} mode`} data-tooltip={`${nextTheme[0].toUpperCase()}${nextTheme.slice(1)} mode`} onClick={onToggleTheme}><span aria-hidden="true">◐</span></button><HeaderContactLinks darkSurface={theme === 'light'} /></div></div></header></>
 }
 
-function Hero() {
-  return <section id="top" data-scroll-section className="hero-scroll"><div className="hero-sticky"><KineticGrid className="hero-grid" globalColor="monochrome"><HeroPortrait /><div className="relative z-10 mx-auto flex h-full max-w-[1440px] items-end px-5 pb-16 pt-28 sm:px-8 sm:pb-20 lg:items-center lg:px-16"><div className="max-w-[1050px]"><h1 className="hero-title hero-enter">Hi, I&apos;m<br /> <span>Allen Shibu</span></h1><p className="hero-position hero-enter">Product builder · <span className="whitespace-nowrap">Co-founder, Astrelon Labs</span> · AWS Student Builders Group Leader.</p></div></div></KineticGrid></div></section>
+function Hero({ theme }: { theme: Theme }) {
+  return <section id="top" data-scroll-section className="hero-scroll"><div className="hero-sticky"><KineticGrid className="hero-grid" globalColor="monochrome" colorScheme={theme}><HeroPortrait /><div className="relative z-10 mx-auto flex h-full max-w-[1440px] items-end px-5 pb-16 pt-28 sm:px-8 sm:pb-20 lg:items-center lg:px-16"><div className="max-w-[1050px]"><h1 className="hero-title hero-enter">Hi, I&apos;m<br /> <span>Allen Shibu</span></h1><p className="hero-position hero-enter">Product builder · <span className="whitespace-nowrap">Co-founder, Astrelon Labs</span> · AWS Student Builders Group Leader.</p></div></div></KineticGrid></div></section>
 }
 
 function RightNow() {
@@ -237,7 +239,13 @@ function Contact() {
 
 export default function App() {
   const [active, setActive] = useState('top')
+  const [theme, setTheme] = useState<Theme>(() => document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light')
   useScrollCraft()
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#080a09' : '#ffffff')
+    try { localStorage.setItem('theme', theme) } catch { /* Storage can be unavailable in privacy modes. */ }
+  }, [theme])
   useEffect(() => {
     const sections = [...document.querySelectorAll<HTMLElement>('#top, #now, #skills, #projects')]
     const update = () => {
@@ -254,5 +262,5 @@ export default function App() {
     document.querySelectorAll('.reveal-in').forEach((element) => observer.observe(element))
     return () => observer.disconnect()
   }, [])
-  return <><Header active={active} /><main id="main"><Hero /><RightNow /><TechStack /><Projects /><Hackathons /><Credibility /><GithubActivity /><Journal /><Contact /></main></>
+  return <><Header active={active} theme={theme} onToggleTheme={() => setTheme((current) => current === 'dark' ? 'light' : 'dark')} /><main id="main"><Hero theme={theme} /><RightNow /><TechStack /><Projects /><Hackathons /><Credibility /><GithubActivity /><Journal /><Contact /></main></>
 }

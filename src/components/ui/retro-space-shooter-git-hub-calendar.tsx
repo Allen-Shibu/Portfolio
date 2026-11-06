@@ -145,9 +145,11 @@ export const GithubCalendar = memo(function GithubCalendar({ username, data: dat
       if (!reduceMotion) playerX = 22 + (width - 44) * (.5 + .5 * Math.sin((now - startedAt) / 1100))
       if (!reduceMotion && now - lastShot > 180) { bullets.push({ x: playerX, y: height - 42 }); lastShot = now }
       context.clearRect(0, 0, width, height)
-      context.fillStyle = 'rgba(0,0,0,.3)'
+      context.fillStyle = 'rgba(255,255,255,.28)'
       stars.forEach((star) => { star.y += star.speed; if (star.y > height) star.y = 0; context.fillRect(star.x, star.y, 1, 1) })
-      context.fillStyle = '#111111'
+      context.fillStyle = '#f5f5f5'
+      context.shadowColor = '#39d353'
+      context.shadowBlur = 6
       bullets.forEach((bullet) => {
         bullet.y -= 6
         context.fillRect(bullet.x - 1.5, bullet.y, 3, 8)
@@ -172,16 +174,17 @@ export const GithubCalendar = memo(function GithubCalendar({ username, data: dat
           }
         }
       })
+      context.shadowBlur = 0
       bullets = bullets.filter((bullet) => !bullet.hit && bullet.y > -10)
 
       context.save()
       context.translate(playerX, height - 17)
-      context.shadowColor = '#111111'; context.shadowBlur = 9
-      context.fillStyle = '#111111'
+      context.shadowColor = '#39d353'; context.shadowBlur = 9
+      context.fillStyle = '#f5f5f5'
       context.beginPath(); context.moveTo(0, -20); context.lineTo(7, -7); context.lineTo(18, 4); context.lineTo(8, 2); context.lineTo(5, 10); context.lineTo(-5, 10); context.lineTo(-8, 2); context.lineTo(-18, 4); context.lineTo(-7, -7); context.closePath(); context.fill()
       context.shadowBlur = 0
-      context.fillStyle = '#f5f5f5'; context.beginPath(); context.moveTo(0, -14); context.lineTo(4, -5); context.lineTo(-4, -5); context.closePath(); context.fill()
-      context.fillStyle = '#777777'; context.fillRect(-5, 10, 3, 5); context.fillRect(2, 10, 3, 5)
+      context.fillStyle = '#39d353'; context.beginPath(); context.moveTo(0, -14); context.lineTo(4, -5); context.lineTo(-4, -5); context.closePath(); context.fill()
+      context.fillStyle = '#a3a3a3'; context.fillRect(-5, 10, 3, 5); context.fillRect(2, 10, 3, 5)
       context.restore()
       if (!reduceMotion) frame = requestAnimationFrame(loop)
     }
