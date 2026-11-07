@@ -138,6 +138,10 @@ function HeaderContactLinks({ darkSurface = false }: { darkSurface?: boolean }) 
   return <nav className="header-connect" aria-label="Social links">{contactLinks.map(([label, href]) => <a key={label} className="header-social pressable" href={href} target={href.startsWith('mailto:') ? undefined : '_blank'} rel={href.startsWith('mailto:') ? undefined : 'noreferrer'} aria-label={`Open ${label}`} data-tooltip={label}><ContactGlyph label={label} darkSurface={darkSurface} /></a>)}</nav>
 }
 
+function PaperPlaneGlyph() {
+  return <svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><path d="M3 11.5 21 4l-7.5 17-3.2-7.3L3 11.5Zm7.3 2.2L21 4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+}
+
 function DockGlyph({ id }: { id: string }) {
   const path = id === 'top' ? 'M3 10 10 3l7 7v7H6v-7m3 7v-5h2v5'
     : id === 'now' ? 'M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm0 3v4l3 2'
@@ -160,7 +164,7 @@ function HeroPortrait() {
 
 function Header({ active, theme, onToggleTheme }: { active: string; theme: Theme; onToggleTheme: () => void }) {
   const nextTheme = theme === 'dark' ? 'light' : 'dark'
-  return <><a href="#main" className="skip-link">Skip to content</a><header className="site-header site-header--docked fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5"><div className="site-header-shell glass mx-auto flex h-14 max-w-[1440px] items-center justify-between rounded-2xl px-3 pl-4 sm:px-5"><nav className="primary-nav hidden items-center gap-1 md:flex" aria-label="Primary navigation"><a href="#top" className="nav-link dock-home" aria-current={active === 'top' ? 'location' : undefined} aria-label="Home" data-tooltip="Home"><DockGlyph id="top" /><span className="nav-label">Home</span></a>{navItems.map(([id, label]) => <a key={id} href={`#${id}`} className="nav-link" aria-current={active === id ? 'location' : undefined} aria-label={label} data-tooltip={label}><DockGlyph id={id} /><span className="nav-label">{label}</span></a>)}</nav><div className="header-actions"><button type="button" className="theme-toggle pressable" aria-label={`Switch to ${nextTheme} mode`} data-tooltip={`${nextTheme[0].toUpperCase()}${nextTheme.slice(1)} mode`} onClick={onToggleTheme}><span aria-hidden="true">◐</span></button><HeaderContactLinks darkSurface={theme === 'light'} /></div></div></header></>
+  return <><a href="#main" className="skip-link">Skip to content</a><header className="site-header site-header--docked fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5"><div className="site-header-shell glass mx-auto flex h-14 max-w-[1440px] items-center justify-between rounded-2xl px-3 pl-4 sm:px-5"><nav className="primary-nav hidden items-center gap-1 md:flex" aria-label="Primary navigation"><a href="#top" className="nav-link dock-home" aria-current={active === 'top' ? 'location' : undefined} aria-label="Home" data-tooltip="Home"><DockGlyph id="top" /><span className="nav-label">Home</span></a>{navItems.map(([id, label]) => <a key={id} href={`#${id}`} className="nav-link" aria-current={active === id ? 'location' : undefined} aria-label={label} data-tooltip={label}><DockGlyph id={id} /><span className="nav-label">{label}</span></a>)}</nav><div className="header-actions"><button type="button" className="theme-toggle pressable" aria-label={`Switch to ${nextTheme} mode`} data-tooltip={`${nextTheme[0].toUpperCase()}${nextTheme.slice(1)} mode`} onClick={onToggleTheme}><span aria-hidden="true">◐</span></button><div className="header-connect-wide"><HeaderContactLinks darkSurface={theme === 'light'} /></div><details className="header-connect-menu"><summary role="button" className="header-connect-toggle pressable" aria-label="Open social links"><PaperPlaneGlyph /></summary><HeaderContactLinks darkSurface={theme === 'light'} /></details></div></div></header></>
 }
 
 function Hero({ theme }: { theme: Theme }) {

@@ -65,6 +65,24 @@ test('shooter bullets stay visible in both themes', async ({ browser }) => {
   }
 })
 
+test('social links compact only on very narrow screens', async ({ browser }) => {
+  const narrowPage = await browser.newPage({ viewport: { width: 540, height: 844 } })
+  await narrowPage.goto('/', { waitUntil: 'networkidle' })
+  const socialToggle = narrowPage.getByRole('button', { name: 'Open social links' })
+  await expect(socialToggle).toBeVisible()
+  await expect(narrowPage.getByRole('link', { name: 'Open LinkedIn' })).not.toBeVisible()
+  await socialToggle.click()
+  await expect(narrowPage.getByRole('link', { name: 'Open LinkedIn' })).toBeVisible()
+  await expect(narrowPage.getByRole('link', { name: 'Open Gmail' })).toBeVisible()
+  await narrowPage.close()
+
+  const regularPage = await browser.newPage({ viewport: { width: 600, height: 915 } })
+  await regularPage.goto('/', { waitUntil: 'networkidle' })
+  await expect(regularPage.getByRole('button', { name: 'Open social links' })).not.toBeVisible()
+  await expect(regularPage.getByRole('link', { name: 'Open LinkedIn' })).toBeVisible()
+  await regularPage.close()
+})
+
 test('portfolio stays readable and operable across layouts', async ({ browser }) => {
   test.setTimeout(60000)
   for (const options of [
@@ -110,6 +128,7 @@ test('portfolio stays readable and operable across layouts', async ({ browser })
     await expect(page.getByText(/50\+ active users/)).toHaveCount(0)
     await expect(page.locator('#now .role-list li')).toHaveCount(3)
     await expect(page.locator('#now h3', { hasText: 'B.Tech Computer Science, GECT' })).toBeAttached()
+    if (options.width <= 570) await page.getByRole('button', { name: 'Open social links' }).click()
     await expect(page.getByRole('link', { name: 'Open LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/allenshibu-as/')
     await expect(page.getByText('What I do', { exact: true })).toHaveCount(0)
     await expect(page.getByText('Tech stack & ecosystem')).toBeAttached()

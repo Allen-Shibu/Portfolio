@@ -154,6 +154,10 @@ button:focus-visible {
 .site-header--docked .nav-link[aria-current="location"] { background: rgba(255,255,255,.13); color: #fff; }
 .site-header--docked .header-connect { gap: .35rem; border-left: 1px solid rgba(255,255,255,.13); padding-left: .75rem; }
 .header-actions { display: flex; align-items: center; gap: .35rem; }
+.header-connect-wide { display: contents; }
+.header-connect-menu { display: none; }
+.header-connect-toggle { display: none; cursor: pointer; list-style: none; }
+.header-connect-toggle::-webkit-details-marker { display: none; }
 .theme-toggle { cursor: pointer; font: inherit; }
 
 .brand-name {
@@ -596,7 +600,8 @@ body { background: #fff; color: #0a0a0a; }
 
 .site-header--docked .nav-link:hover,
 .site-header--docked .header-social:hover,
-.site-header--docked .theme-toggle:hover { border-color: rgba(255,255,255,.28); background: rgba(255,255,255,.12); color: #fff; }
+.site-header--docked .theme-toggle:hover,
+.site-header--docked .header-connect-toggle:hover { border-color: rgba(255,255,255,.28); background: rgba(255,255,255,.12); color: #fff; }
 
 @media (max-width: 600px) {
   .site-header--docked .site-header-shell { gap: .2rem; padding: .3rem; }
@@ -607,6 +612,40 @@ body { background: #fff; color: #0a0a0a; }
   .site-header--docked .header-social,
   .site-header--docked .theme-toggle { width: 2.1rem; height: 2.1rem; }
   .site-header--docked .header-social svg { width: 1rem; height: 1rem; }
+}
+
+@media (max-width: 570px) {
+  .site-header--docked .header-connect-wide { display: none; }
+  .site-header--docked .header-connect-menu { position: relative; display: block; }
+  .site-header--docked .header-connect-toggle {
+    position: relative;
+    display: grid;
+    width: 2.1rem;
+    height: 2.1rem;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 50%;
+    background: rgba(255,255,255,.025);
+    color: #d7d7d7;
+  }
+  .site-header--docked .header-connect-toggle svg { width: 1.05rem; height: 1.05rem; }
+  .site-header--docked .header-connect-menu > .header-connect {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + .65rem);
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 999px;
+    background: rgba(16,16,16,.96);
+    box-shadow: 0 .8rem 2rem rgba(0,0,0,.24);
+    padding: .35rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(.35rem) scale(.96);
+    transform-origin: bottom right;
+    pointer-events: none;
+    transition: opacity 140ms ease, transform 140ms var(--ease-out), visibility 0s linear 140ms;
+  }
+  .site-header--docked .header-connect-menu[open] > .header-connect { opacity: 1; visibility: visible; transform: none; pointer-events: auto; transition-delay: 0s; }
 }
 
 html[data-theme="dark"] { color-scheme: dark; --canvas: #080a09; --surface: #111411; --ink: #eef1ee; --soft: #a5ada7; --accent: #f2f4f2; background: var(--canvas); scrollbar-color: #727a74 #111411; }
@@ -623,6 +662,11 @@ html[data-theme="dark"] .site-header--docked .site-header-shell { border-color: 
 html[data-theme="dark"] .site-header--docked :is(.nav-link, .header-social, .theme-toggle) { border-color: rgba(0,0,0,.14); background: rgba(0,0,0,.025); color: #202420; }
 html[data-theme="dark"] .site-header--docked .nav-link[aria-current="location"] { background: #080a09; color: #fff; }
 html[data-theme="dark"] .site-header--docked .header-connect { border-color: rgba(0,0,0,.14); }
+html[data-theme="dark"] .site-header--docked .header-connect-toggle { border-color: rgba(0,0,0,.14); background: rgba(0,0,0,.025); color: #202420; }
+
+@media (max-width: 570px) {
+  html[data-theme="dark"] .site-header--docked .header-connect-menu > .header-connect { border-color: rgba(0,0,0,.16); background: rgba(255,255,255,.98); }
+}
 
 html[data-theme="dark"] .hero-sticky,
 html[data-theme="dark"] .now-scroll,
@@ -663,7 +707,7 @@ html[data-theme="dark"] .gallery-dialog button { border-color: rgba(238,241,238,
 html[data-theme="dark"] :is(.connect-links a, .connect-links--compact a, .connect-links--compact a:first-child) { border-color: rgba(238,241,238,.24); color: var(--ink); }
 
 @media (hover: hover) {
-  html[data-theme="dark"] .site-header--docked :is(.nav-link, .header-social, .theme-toggle):hover { border-color: #080a09; background: #080a09; color: #fff; }
+  html[data-theme="dark"] .site-header--docked :is(.nav-link, .header-social, .theme-toggle, .header-connect-toggle):hover { border-color: #080a09; background: #080a09; color: #fff; }
   html[data-theme="dark"] .project-action:hover { background: #eef1ee; color: #080a09; }
 }
 
